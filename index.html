@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Premium | Sistema Exclusivo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 Acceso al Sistema</h1>
+        <form id="access-form">
+            <input 
+                type="text" 
+                id="code" 
+                placeholder="Ej: A1B2" 
+                required
+                maxlength="4"
+                pattern="[A-Z0-9]{4}"
+                title="4 letras/números (mayúsculas)"
+            >
+            <button type="submit">INGRESAR</button>
+        </form>
+        <p id="message" class="error"></p>
+        <p id="device-info" class="info"></p>
+        <p class="warning"><small>Horario de soporte: <strong>8:00 AM - 4:00 PM</strong></small></p>
+        <p><small>¿Problemas? Contacta a soporte: <strong>0412-527-8450</strong></small></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
