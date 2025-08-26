@@ -4,7 +4,7 @@ const SECURITY_CONFIG = {
     INACTIVITY_TIMEOUT: 10 * 60 * 1000, // 10 minutos
     CODE_VALIDATION_DELAY: 800, // Retraso anti-fuerza bruta
     SALT: "xQ9#pL2$kM5&vR1", // Sal para hashing
-    REDIRECT_URL: "https://luishparedes.github.io/magica_pro-web/" // ✅ NUEVA URL CENTRALIZADA
+    REDIRECT_URL: "https://luishparedes.github.io/massiel/" // ✅ NUEVA URL CENTRALIZADA
 };
 
 // 🏷️ Códigos válidos (ofuscados con encoding múltiple)
