@@ -9,7 +9,7 @@ const SECURITY_CONFIG = {
 
 // 🏷️ Códigos válidos (ofuscados con encoding múltiple)
 const VALID_CODES = (() => {
-    const encoded = "Q9R1,K5M9,J3L7";
+    const encoded = "Q9R1,X7P2,K5M9,J3L7";
     return encoded.split(',');
 })();
 
