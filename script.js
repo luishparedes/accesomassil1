@@ -124,14 +124,13 @@ class CodeSecuritySystem {
     }
 
     handleInactiveSession() {
-        // Guardar código actual antes de redirigir
-        const currentCode = localStorage.getItem('currentValidCode');
+        // ✅ MODIFICADO: Limpiar completamente antes de redirigir
         sessionStorage.removeItem('activeSessionToken');
+        localStorage.removeItem('currentValidCode');
+        localStorage.removeItem('secureDeviceId');
         
-        if (currentCode) {
-            // Redirigir manteniendo el código en localStorage
-            window.location.href = window.location.pathname;
-        }
+        // Redirigir a sí mismo para reiniciar
+        window.location.href = window.location.pathname;
     }
 
     // 🔍 Verificar sesión existente
@@ -144,9 +143,12 @@ class CodeSecuritySystem {
             const deviceId = this.generateDeviceId();
             
             if (devices.some(dev => dev.id === deviceId)) {
-                // ✅ Redirigir al NUEVO ENLACE (evitando 404)
+                // ✅ MODIFICADO: Limpiar temporizadores antes de redirigir
+                limpiarTemporizadoresExternos();
+                
+                // Redirigir al NUEVO ENLACE (evitando 404)
                 setTimeout(() => {
-                    window.location.href = SECURITY_CONFIG.REDIRECT_URL;
+                    window.location.href = SECURITY_CONFIG.REDIRECT_URL + '?t=' + Date.now();
                 }, 500);
             }
         }
@@ -193,8 +195,22 @@ class CodeSecuritySystem {
     }
 }
 
-// 🚀 Inicialización del Sistema
+// 🆕 FUNCIÓN PARA LIMPIAR TEMPORIZADORES EXTERNOS
+function limpiarTemporizadoresExternos() {
+    // Marcar el tiempo de acceso actual para que la calculadora no redirija
+    localStorage.setItem('ultimoAcceso', Date.now());
+    console.log('🔄 Temporizadores externos limpiados');
+}
+
+// 🚀 INICIALIZACIÓN DEL SISTEMA
 document.addEventListener('DOMContentLoaded', () => {
+    // Ejecutar limpieza de temporizadores al cargar
+    limpiarTemporizadoresExternos();
+    
+    // También limpiar cada 30 segundos por si acaso
+    setInterval(limpiarTemporizadoresExternos, 30000);
+    
+    // Inicializar sistema de seguridad
     const securitySystem = new CodeSecuritySystem();
     const accessForm = document.getElementById('access-form');
     const codeInput = document.getElementById('code');
@@ -260,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (result.valid) {
             showMessage("✅ Acceso concedido...", "success");
-            // ✅ Redirigir al NUEVO ENLACE (evitando 404)
+            // ✅ Redirigir al NUEVO ENLACE
             setTimeout(() => {
                 window.location.href = SECURITY_CONFIG.REDIRECT_URL;
             }, 1500);
