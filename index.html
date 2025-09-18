@@ -4,29 +4,2173 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceso Premium | Sistema Exclusivo</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Contenedor principal de cliente */
+        #client-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        input[type="text"] {
+            text-transform: uppercase;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .error { color: #e74c3c; }
+        .success { color: #27ae60; }
+        .warning { color: #f39c12; }
+        .info { color: #3498db; }
+        
+        /* Panel de administración */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f5f7fa;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .admin-header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .admin-nav {
+            background: #34495e;
+            padding: 0.5rem 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: #ecf0f1;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: auto;
+        }
+        
+        .nav-btn:hover, .nav-btn.active {
+            background: #3498db;
+        }
+        
+        .admin-content {
+            padding: 2rem;
+        }
+        
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+        
+        .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .card.active { border-top: 4px solid #2ecc71; }
+        .card.inactive { border-top: 4px solid #e74c3c; }
+        .card.devices { border-top: 4px solid #3498db; }
+        .card.usage { border-top: 4px solid #f39c12; }
+        
+        .admin-section {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .code-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .code-item {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #2ecc71;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .code-item.inactive {
+            border-left-color: #e74c3c;
+        }
+        
+        .code-info {
+            flex: 1;
+            width: 100%;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-value {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .code-name {
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 0.3rem;
+        }
+        
+        .code-contact {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-stats {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: flex-end;
+        }
+        
+        .action-btn {
+            padding: 0.4rem 0.6rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .btn-activate {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .btn-deactivate {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-edit {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-info {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .device-list {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .device-item {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .device-info {
+            flex: 1;
+        }
+        
+        .device-id {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+        
+        .device-meta {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+        
+        .admin-login {
+            display: none;
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-link {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: #2c3e50;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+        }
+        
+        .search-box {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .search-box input {
+            flex: 1;
+            margin: 0;
+        }
+        
+        .search-box button {
+            width: auto;
+            margin: 0;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background: #e8f5e9;
+            color: #2ecc71;
+        }
+        
+        .status-inactive {
+            background: #ffebee;
+            color: #e74c3c;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            width: 120px;
+            color: #7f8c8d;
+        }
+        
+        .detail-value {
+            flex: 1;
+        }
+        
+        .detail-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .detail-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .code-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-nav {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🔒 Acceso al Sistema</h1>
-        <form id="access-form">
-            <input 
-                type="text" 
-                id="code" 
-                placeholder="Ej: A1B2" 
-                required
-                maxlength="4"
-                pattern="[A-Z0-9]{4}"
-                title="4 letras/números (mayúsculas)"
-            >
-            <button type="submit">INGRESAR</button>
-        </form>
-        <p id="message" class="error"></p>
-        <p id="device-info" class="info"></p>
-        <p class="warning"><small>Horario de soporte: <strong>10:00 AM - 4:00 PM</strong></small></p>
-        <p><small>¿Problemas? Contacta a soporte: <strong>0412-527-8450</strong></small></p>
+    <!-- Interfaz principal para clientes -->
+    <div id="client-container">
+        <div class="container">
+            <h1>🔒 Acceso al Sistema</h1>
+            <form id="access-form">
+                <input 
+                    type="text" 
+                    id="code" 
+                    placeholder="Ej: A1B2" 
+                    required
+                    maxlength="4"
+                    pattern="[A-Z0-9]{4}"
+                    title="4 letras/números (mayúsculas)"
+                >
+                <button type="submit">INGRESAR</button>
+            </form>
+            <p id="message" class="error"></p>
+            <p id="device-info" class="info"></p>
+            <p class="warning"><small>Horario de soporte: <strong>10:00 AM - 4:00 PM</strong></small></p>
+            <p><small>¿Problemas? Contacta a soporte: <strong>0412-527-8450</strong></small></p>
+        </div>
+        
+        <!-- Enlace flotante para acceder al panel de administración -->
+        <a href="#" class="admin-link" id="admin-access">
+            <i class="fas fa-cog"></i>
+        </a>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Panel de login para administradores -->
+    <div class="admin-login" id="admin-login">
+        <h2><i class="fas fa-lock"></i> Acceso Administrador</h2>
+        <form id="admin-login-form">
+            <div class="form-group">
+                <label for="admin-user">Usuario:</label>
+                <input type="text" id="admin-user" placeholder="Usuario" required>
+            </div>
+            <div class="form-group">
+                <label for="admin-password">Contraseña:</label>
+                <input type="password" id="admin-password" placeholder="Contraseña" required>
+            </div>
+            <button type="submit"><i class="fas fa-sign-in-alt"></i> ACCEDER</button>
+        </form>
+        <p id="admin-message" class="error"></p>
+    </div>
+
+    <!-- Panel de administración -->
+    <div class="admin-panel" id="admin-panel">
+        <div class="admin-header">
+            <h2><i class="fas fa-shield-alt"></i> Panel de Administración</h2>
+            <button id="logout-btn" class="nav-btn"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+        </div>
+        
+        <div class="admin-nav">
+            <button class="nav-btn active" data-tab="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+            <button class="nav-btn" data-tab="codes"><i class="fas fa-key"></i> Códigos</button>
+            <button class="nav-btn" data-tab="devices"><i class="fas fa-laptop"></i> Dispositivos</button>
+            <button class="nav-btn" data-tab="settings"><i class="fas fa-cog"></i> Configuración</button>
+        </div>
+        
+        <div class="admin-content">
+            <!-- Dashboard -->
+            <div class="tab-content active" id="dashboard">
+                <h2 class="section-title">Resumen del Sistema</h2>
+                
+                <div class="dashboard-cards">
+                    <div class="card active">
+                        <div class="card-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="card-title">Códigos Activos</div>
+                        <div class="card-value" id="stat-active">0</div>
+                    </div>
+                    
+                    <div class="card inactive">
+                        <div class="card-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="card-title">Códigos Inactivos</div>
+                        <div class="card-value" id="stat-inactive">0</div>
+                    </div>
+                    
+                    <div class="card devices">
+                        <div class="card-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <div class="card-title">Dispositivos Registrados</div>
+                        <div class="card-value" id="stat-devices">0</div>
+                    </div>
+                    
+                    <div class="card usage">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="card-title">Uso Promedio</div>
+                        <div class="card-value" id="stat-usage">0%</div>
+                    </div>
+                </div>
+                
+                <div class="admin-section">
+                    <h3 class="section-title">Códigos Recientes</h3>
+                    <div class="code-grid" id="recent-codes">
+                        <!-- Los códigos se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gestión de Códigos -->
+            <div class="tab-content" id="codes">
+                <h2 class="section-title">Gestión de Códigos de Acceso</h2>
+                
+                <div class="admin-section">
+                    <div class="filters">
+                        <div class="form-group">
+                            <label>Estado:</label>
+                            <select id="filter-status">
+                                <option value="">Todos</option>
+                                <option value="active">Activos</option>
+                                <option value="inactive">Inactivos</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Dispositivos:</label>
+                            <select id="filter-devices">
+                                <option value="">Todos</option>
+                                <option value="full">Llenos</option>
+                                <option value="available">Con espacio</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Ordenar por:</label>
+                            <select id="filter-sort">
+                                <option value="recent">Más recientes</option>
+                                <option value="oldest">Más antiguos</option>
+                                <option value="name">Nombre</option>
+                                <option value="code">Código</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="search-box">
+                        <input type="text" id="code-search" placeholder="Buscar por código, nombre, teléfono...">
+                        <button id="search-btn"><i class="fas fa-search"></i></button>
+                        <button id="clear-search" class="action-btn btn-deactivate"><i class="fas fa-times"></i> Limpiar</button>
+                    </div>
+                    
+                    <div class="section-actions">
+                        <button id="generate-code-btn" class="action-btn btn-activate">
+                            <i class="fas fa-plus"></i> Generar Nuevo Código
+                        </button>
+                    </div>
+                    
+                    <div class="code-grid" id="all-codes">
+                        <!-- Los códigos se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gestión de Dispositivos -->
+            <div class="tab-content" id="devices">
+                <h2 class="section-title">Dispositivos Registrados</h2>
+                
+                <div class="admin-section">
+                    <div class="form-group">
+                        <label>Filtrar por código:</label>
+                        <select id="code-selector">
+                            <option value="">Todos los dispositivos</option>
+                        </select>
+                    </div>
+                    
+                    <div class="device-list" id="devices-list">
+                        <!-- Los dispositivos se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Configuración -->
+            <div class="tab-content" id="settings">
+                <h2 class="section-title">Configuración del Sistema</h2>
+                
+                <div class="admin-section">
+                    <h3 class="section-title">Límites del Sistema</h3>
+                    <div class="form-group">
+                        <label>Límite de dispositivos por código:</label>
+                        <input type="number" id="max-devices" value="3" min="1" max="10">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tiempo de inactividad (minutos):</label>
+                        <input type="number" id="inactivity-timeout" value="10" min="1" max="60">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>URL de redirección:</label>
+                        <input type="text" id="redirect-url" placeholder="https://ejemplo.com">
+                    </div>
+                    
+                    <button id="save-settings" class="action-btn btn-activate">
+                        <i class="fas fa-save"></i> Guardar Configuración
+                    </button>
+                </div>
+                
+                <div class="admin-section">
+                    <h3 class="section-title">Credenciales de Administrador</h3>
+                    <div class="form-group">
+                        <label>Usuario:</label>
+                        <input type="text" id="admin-username" placeholder="Usuario administrador">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Contraseña:</label>
+                        <input type="password" id="admin-password" placeholder="Nueva contraseña">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Confirmar contraseña:</label>
+                        <input type="password" id="admin-password-confirm" placeholder="Confirmar contraseña">
+                    </div>
+                    
+                    <button id="save-admin" class="action-btn btn-activate">
+                        <i class="fas fa-save"></i> Guardar Credenciales
+                    </button>
+                </div>
+                
+                <div class="admin-section">
+                    <h3 class="section-title">Exportar/Importar Datos</h3>
+                    
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button id="export-data" class="action-btn btn-edit">
+                            <i class="fas fa-download"></i> Exportar Datos
+                        </button>
+                        
+                        <button id="import-data" class="action-btn btn-edit">
+                            <i class="fas fa-upload"></i> Importar Datos
+                        </button>
+                        
+                        <button id="reset-data" class="action-btn btn-deactivate">
+                            <i class="fas fa-trash"></i> Restablecer Datos
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para detalles del código -->
+    <div class="modal" id="code-detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalles del Código</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div id="code-detail-content">
+                <!-- Los detalles se cargarán dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar/editar código -->
+    <div class="modal" id="code-edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="code-edit-title">Nuevo Código</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="edit-code">Código:</label>
+                <input type="text" id="edit-code" maxlength="4" pattern="[A-Z0-9]{4}" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-name">Nombre del cliente:</label>
+                <input type="text" id="edit-name">
+            </div>
+            <div class="form-group">
+                <label for="edit-phone">Teléfono:</label>
+                <input type="text" id="edit-phone">
+            </div>
+            <div class="form-group">
+                <label for="edit-email">Email:</label>
+                <input type="email" id="edit-email">
+            </div>
+            <div class="form-group">
+                <label for="edit-notes">Notas:</label>
+                <textarea id="edit-notes" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="edit-status">Estado:</label>
+                <select id="edit-status">
+                    <option value="active">Activo</option>
+                    <option value="inactive">Inactivo</option>
+                </select>
+            </div>
+            <button id="save-code-btn" class="action-btn btn-activate">Guardar Código</button>
+        </div>
+    </div>
+
+    <script>
+        // 🔐 Configuración de Seguridad Avanzada
+        const SECURITY_CONFIG = {
+            MAX_DEVICES: 3,
+            INACTIVITY_TIMEOUT: 10 * 60 * 1000, // 10 minutos
+            CODE_VALIDATION_DELAY: 800, // Retraso anti-fuerza bruta
+            SALT: "xQ9#pL2$kM5&vR1", // Sal para hashing
+            REDIRECT_URL: "https://luishparedes.github.io/massiel/", // ✅ NUEVA URL CENTRALIZADA
+            ADMIN_USER: "admin", // Cambiar en producción
+            ADMIN_PASSWORD: "admin123" // Cambiar en producción
+        };
+
+        // 🏷️ Códigos válidos (ofuscados con encoding múltiple)
+        const VALID_CODES = (() => {
+            const encoded = "Q9R1,Y0Q5,X9P4,W8O3,V7N2,U6M1,T5L0,V4W8,S4K9,R3J8,Q2I7,D2E6,P1H6,J5O9,U4W8,J4B9,O0G5,N9F4,M8E3,L7D2,N0O4,K6C1,J5B0,I4A9,U2Z6,J0K4,H3Z8,I7A3,T7Y1,F1X6,Q6S0,E0W5,D9V4,C8U3,A6S1,G2Y7,Z5R0,X8Y2,Y4Q9,Q9R1,W207,X3P8,G9K4,S9U3,V1N6,U0M5,T9L4,J3M7,S8K3,R7J2,Q6I1,P5H9,O4G9,N3F8,M2E7,L1D6,K0C5,J9B4,I8A3,H7Z2,G6Y1,F5X0,E4W9,D3V8,C2U7,B1T6,A0S5,Z9R4,Y8Q3,X7P2,K5M9,J3L7";
+            return encoded.split(',');
+        })();
+
+        // 🛡️ Sistema de Seguridad Mejorado
+        class CodeSecuritySystem {
+            constructor() {
+                this.initSessionProtection();
+                this.checkExistingSession();
+                this.loadConfigFromStorage();
+            }
+            
+            loadConfigFromStorage() {
+                // Cargar configuración desde localStorage
+                const maxDevices = localStorage.getItem('maxDevices');
+                const inactivityTimeout = localStorage.getItem('inactivityTimeout');
+                const redirectUrl = localStorage.getItem('redirectUrl');
+                const adminUser = localStorage.getItem('adminUser');
+                const adminPassword = localStorage.getItem('adminPassword');
+                
+                if (maxDevices) SECURITY_CONFIG.MAX_DEVICES = parseInt(maxDevices);
+                if (inactivityTimeout) SECURITY_CONFIG.INACTIVITY_TIMEOUT = parseInt(inactivityTimeout) * 60 * 1000;
+                if (redirectUrl) SECURITY_CONFIG.REDIRECT_URL = redirectUrl;
+                if (adminUser) SECURITY_CONFIG.ADMIN_USER = adminUser;
+                if (adminPassword) SECURITY_CONFIG.ADMIN_PASSWORD = adminPassword;
+            }
+
+            // 🔄 Generar ID de dispositivo único y persistente
+            generateDeviceId() {
+                const storedId = localStorage.getItem('secureDeviceId');
+                if (storedId) return storedId;
+
+                const fingerprint = [
+                    navigator.userAgent,
+                    navigator.hardwareConcurrency,
+                    screen.width,
+                    screen.height,
+                    navigator.deviceMemory,
+                    SECURITY_CONFIG.SALT
+                ].join('|');
+
+                const deviceId = this.hashString(fingerprint) + '-' + Date.now().toString(36);
+                localStorage.setItem('secureDeviceId', deviceId);
+                return deviceId;
+            }
+
+            // 🔢 Algoritmo de hashing mejorado
+            hashString(str) {
+                let hash = 5381;
+                for (let i = 0; i < str.length; i++) {
+                    hash = (hash * 33) ^ str.charCodeAt(i);
+                }
+                return (hash >>> 0).toString(36);
+            }
+
+            // 🏷️ Obtener dispositivos registrados para un código
+            getRegisteredDevices(code) {
+                const encrypted = localStorage.getItem(`encDevices_${code}`);
+                if (!encrypted) return [];
+
+                try {
+                    const decrypted = this.decryptData(encrypted);
+                    return JSON.parse(decrypted) || [];
+                } catch (e) {
+                    console.error("Error al decodificar dispositivos:", e);
+                    return [];
+                }
+            }
+
+            // ➕ Registrar nuevo dispositivo de forma segura
+            registerDevice(code) {
+                const deviceId = this.generateDeviceId();
+                const devices = this.getRegisteredDevices(code);
+
+                // Verificar si ya está registrado
+                if (devices.some(dev => dev.id === deviceId)) {
+                    return { success: true, isNew: false };
+                }
+
+                // Verificar límite de dispositivos
+                if (devices.length >= SECURITY_CONFIG.MAX_DEVICES) {
+                    return { success: false, reason: "Límite de dispositivos alcanzado" };
+                }
+
+                // Registrar nuevo dispositivo
+                devices.push({
+                    id: deviceId,
+                    timestamp: Date.now(),
+                    ua: navigator.userAgent.substring(0, 120),
+                    lastAccess: Date.now()
+                });
+
+                // Guardar cifrado
+                localStorage.setItem(`encDevices_${code}`, this.encryptData(JSON.stringify(devices)));
+                return { success: true, isNew: true };
+            }
+
+            // 🔐 Cifrado básico de datos
+            encryptData(data) {
+                return btoa(unescape(encodeURIComponent(data + SECURITY_CONFIG.SALT)));
+            }
+
+            // 🔓 Descifrado de datos
+            decryptData(encrypted) {
+                try {
+                    const decoded = decodeURIComponent(escape(atob(encrypted)));
+                    return decoded.replace(SECURITY_CONFIG.SALT, '');
+                } catch (e) {
+                    console.error("Error al descifrar:", e);
+                    return '';
+                }
+            }
+
+            // ⏳ Protección por inactividad
+            initSessionProtection() {
+                // Reiniciar timer en eventos de usuario
+                const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+                events.forEach(evt => {
+                    document.addEventListener(evt, this.resetInactivityTimer.bind(this));
+                });
+
+                this.resetInactivityTimer();
+            }
+
+            resetInactivityTimer() {
+                clearTimeout(this.inactivityTimer);
+                this.inactivityTimer = setTimeout(() => {
+                    this.handleInactiveSession();
+                }, SECURITY_CONFIG.INACTIVITY_TIMEOUT);
+            }
+
+            handleInactiveSession() {
+                // Guardar código actual antes de redirigir
+                const currentCode = localStorage.getItem('currentValidCode');
+                sessionStorage.removeItem('activeSessionToken');
+                
+                if (currentCode) {
+                    // Redirigir manteniendo el código en localStorage
+                    window.location.href = window.location.pathname;
+                }
+            }
+
+            // 🔍 Verificar sesión existente
+            checkExistingSession() {
+                const savedCode = localStorage.getItem('currentValidCode');
+                const sessionToken = sessionStorage.getItem('activeSessionToken');
+                
+                if (savedCode && sessionToken) {
+                    const devices = this.getRegisteredDevices(savedCode);
+                    const deviceId = this.generateDeviceId();
+                    
+                    if (devices.some(dev => dev.id === deviceId)) {
+                        // ✅ Redirigir al NUEVO ENLACE (evitando 404)
+                        setTimeout(() => {
+                            window.location.href = SECURITY_CONFIG.REDIRECT_URL;
+                        }, 500);
+                    }
+                }
+            }
+
+            // ✅ Validar código de acceso
+            validateAccessCode(code) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        if (!VALID_CODES.includes(code)) {
+                            resolve({ valid: false, error: "Código no válido" });
+                            return;
+                        }
+
+                        const registration = this.registerDevice(code);
+                        if (!registration.success) {
+                            resolve({ valid: false, error: registration.reason });
+                            return;
+                        }
+
+                        // Establecer sesión válida
+                        localStorage.setItem('currentValidCode', code);
+                        sessionStorage.setItem('activeSessionToken', this.hashString(Date.now().toString()));
+                        
+                        resolve({ valid: true, isNewDevice: registration.isNew });
+                    }, SECURITY_CONFIG.CODE_VALIDATION_DELAY);
+                });
+            }
+
+            // ℹ️ Obtener información de dispositivos registrados
+            getDeviceRegistrationInfo(code) {
+                const devices = this.getRegisteredDevices(code);
+                const currentDeviceId = this.generateDeviceId();
+                
+                const isCurrentRegistered = devices.some(dev => dev.id === currentDeviceId);
+                const availableSlots = SECURITY_CONFIG.MAX_DEVICES - devices.length;
+                
+                return {
+                    isRegistered: isCurrentRegistered,
+                    registeredDevices: devices.length,
+                    maxDevices: SECURITY_CONFIG.MAX_DEVICES,
+                    availableSlots: availableSlots > 0 ? availableSlots : 0
+                };
+            }
+
+            // 👨‍💼 Métodos para el panel de administración
+            getAllCodes() {
+                const codes = [];
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key.startsWith('encDevices_')) {
+                        const code = key.replace('encDevices_', '');
+                        const devices = this.getRegisteredDevices(code);
+                        const clientInfo = this.getClientInfo(code);
+                        
+                        codes.push({
+                            code: code,
+                            active: VALID_CODES.includes(code),
+                            devices: devices.length,
+                            created: this.getCodeCreationDate(code),
+                            lastAccess: this.getLastAccessDate(devices),
+                            ...clientInfo
+                        });
+                    }
+                }
+                
+                // Agregar códigos válidos que no tienen dispositivos registrados
+                VALID_CODES.forEach(code => {
+                    if (!codes.some(c => c.code === code)) {
+                        const clientInfo = this.getClientInfo(code);
+                        codes.push({
+                            code: code,
+                            active: true,
+                            devices: 0,
+                            created: this.getCodeCreationDate(code),
+                            lastAccess: null,
+                            ...clientInfo
+                        });
+                    }
+                });
+                
+                return codes;
+            }
+            
+            getClientInfo(code) {
+                const infoStr = localStorage.getItem(`client_${code}`);
+                if (!infoStr) return { name: '', phone: '', email: '', notes: '' };
+                
+                try {
+                    return JSON.parse(infoStr);
+                } catch (e) {
+                    console.error("Error parsing client info:", e);
+                    return { name: '', phone: '', email: '', notes: '' };
+                }
+            }
+            
+            saveClientInfo(code, info) {
+                localStorage.setItem(`client_${code}`, JSON.stringify(info));
+            }
+            
+            getCodeCreationDate(code) {
+                const dateStr = localStorage.getItem(`created_${code}`);
+                return dateStr ? new Date(dateStr) : new Date(2023, 0, 1); // Fecha por defecto
+            }
+            
+            getLastAccessDate(devices) {
+                if (!devices || devices.length === 0) return null;
+                return new Date(Math.max(...devices.map(d => d.lastAccess || d.timestamp)));
+            }
+            
+            setCodeStatus(code, active) {
+                if (active && !VALID_CODES.includes(code)) {
+                    VALID_CODES.push(code);
+                    localStorage.setItem(`created_${code}`, new Date().toISOString());
+                } else if (!active) {
+                    const index = VALID_CODES.indexOf(code);
+                    if (index > -1) {
+                        VALID_CODES.splice(index, 1);
+                    }
+                }
+                
+                // Actualizar almacenamiento local con los códigos actualizados
+                localStorage.setItem('validCodes', JSON.stringify(VALID_CODES));
+                return true;
+            }
+            
+            removeDevice(code, deviceId) {
+                const devices = this.getRegisteredDevices(code);
+                const filteredDevices = devices.filter(dev => dev.id !== deviceId);
+                
+                localStorage.setItem(`encDevices_${code}`, this.encryptData(JSON.stringify(filteredDevices)));
+                return true;
+            }
+            
+           generateNewCode() {
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                let newCode = '';
+                let attempts = 0;
+                const maxAttempts = 50; // Límite de intentos para evitar bucles infinitos
+                
+                do {
+                    newCode = '';
+                    for (let i = 0; i < 4; i++) {
+                        newCode += characters.charAt(Math.floor(Math.random() * characters.length));
+                    }
+                    attempts++;
+                    
+                    // Si excede los intentos, agregar timestamp para hacerlo único
+                    if (attempts >= maxAttempts) {
+                        const timestamp = Date.now().toString();
+                        newCode = newCode.substring(0, 3) + timestamp.charAt(timestamp.length - 1);
+                        break;
+                    }
+                } while (VALID_CODES.includes(newCode));
+                
+                // Agregar el nuevo código
+                VALID_CODES.push(newCode);
+                localStorage.setItem('validCodes', JSON.stringify(VALID_CODES));
+                localStorage.setItem(`created_${newCode}`, new Date().toISOString());
+                
+                return newCode;
+            }
+            
+            getAllDevices() {
+                const devices = [];
+                const codes = this.getAllCodes();
+                
+                codes.forEach(codeData => {
+                    if (codeData.devices > 0) {
+                        const codeDevices = this.getRegisteredDevices(codeData.code);
+                        codeDevices.forEach(device => {
+                            devices.push({
+                                ...device,
+                                code: codeData.code,
+                                clientName: codeData.name
+                            });
+                        });
+                    }
+                });
+                
+                return devices;
+            }
+            
+            getDevicesByCode(code) {
+                if (!code) return this.getAllDevices();
+                const codeData = this.getAllCodes().find(c => c.code === code);
+                const clientName = codeData ? codeData.name : '';
+                
+                return this.getRegisteredDevices(code).map(device => ({
+                    ...device,
+                    code: code,
+                    clientName: clientName
+                }));
+            }
+            
+            updateSettings(newSettings) {
+                if (newSettings.maxDevices) {
+                    SECURITY_CONFIG.MAX_DEVICES = newSettings.maxDevices;
+                    localStorage.setItem('maxDevices', newSettings.maxDevices);
+                }
+                
+                if (newSettings.inactivityTimeout) {
+                    SECURITY_CONFIG.INACTIVITY_TIMEOUT = newSettings.inactivityTimeout * 60 * 1000;
+                    localStorage.setItem('inactivityTimeout', newSettings.inactivityTimeout);
+                }
+                
+                if (newSettings.redirectUrl) {
+                    SECURITY_CONFIG.REDIRECT_URL = newSettings.redirectUrl;
+                    localStorage.setItem('redirectUrl', newSettings.redirectUrl);
+                }
+                
+                if (newSettings.adminUser) {
+                    SECURITY_CONFIG.ADMIN_USER = newSettings.adminUser;
+                    localStorage.setItem('adminUser', newSettings.adminUser);
+                }
+                
+                if (newSettings.adminPassword) {
+                    SECURITY_CONFIG.ADMIN_PASSWORD = newSettings.adminPassword;
+                    localStorage.setItem('adminPassword', newSettings.adminPassword);
+                }
+                
+                return true;
+            }
+            
+            exportData() {
+                const data = {
+                    validCodes: VALID_CODES,
+                    settings: {
+                        maxDevices: SECURITY_CONFIG.MAX_DEVICES,
+                        inactivityTimeout: SECURITY_CONFIG.INACTIVITY_TIMEOUT / (60 * 1000),
+                        redirectUrl: SECURITY_CONFIG.REDIRECT_URL,
+                        adminUser: SECURITY_CONFIG.ADMIN_USER
+                    },
+                    devices: {},
+                    clients: {}
+                };
+                
+                // Recopilar todos los datos de dispositivos y clientes
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key.startsWith('encDevices_')) {
+                        const code = key.replace('encDevices_', '');
+                        try {
+                            const devices = this.getRegisteredDevices(code);
+                            data.devices[code] = devices;
+                        } catch (e) {
+                            console.error("Error exporting devices for code", code, e);
+                        }
+                    } else if (key.startsWith('client_')) {
+                        const code = key.replace('client_', '');
+                        try {
+                            const clientInfo = this.getClientInfo(code);
+                            data.clients[code] = clientInfo;
+                        } catch (e) {
+                            console.error("Error exporting client info for code", code, e);
+                        }
+                    } else if (key.startsWith('created_')) {
+                        const code = key.replace('created_', '');
+                        const dateStr = localStorage.getItem(key);
+                        if (!data.clients[code]) {
+                            data.clients[code] = {};
+                        }
+                        data.clients[code].created = dateStr;
+                    }
+                }
+                
+                return JSON.stringify(data);
+            }
+            
+            importData(jsonData) {
+                try {
+                    const data = JSON.parse(jsonData);
+                    
+                    // Restaurar códigos válidos
+                    if (data.validCodes && Array.isArray(data.validCodes)) {
+                        VALID_CODES.length = 0;
+                        data.validCodes.forEach(code => VALID_CODES.push(code));
+                        localStorage.setItem('validCodes', JSON.stringify(VALID_CODES));
+                    }
+                    
+                    // Restaurar configuraciones
+                    if (data.settings) {
+                        if (data.settings.maxDevices) {
+                            SECURITY_CONFIG.MAX_DEVICES = data.settings.maxDevices;
+                            localStorage.setItem('maxDevices', data.settings.maxDevices);
+                        }
+                        
+                        if (data.settings.inactivityTimeout) {
+                            SECURITY_CONFIG.INACTIVITY_TIMEOUT = data.settings.inactivityTimeout * 60 * 1000;
+                            localStorage.setItem('inactivityTimeout', data.settings.inactivityTimeout);
+                        }
+                        
+                        if (data.settings.redirectUrl) {
+                            SECURITY_CONFIG.REDIRECT_URL = data.settings.redirectUrl;
+                            localStorage.setItem('redirectUrl', data.settings.redirectUrl);
+                        }
+                        
+                        if (data.settings.adminUser) {
+                            SECURITY_CONFIG.ADMIN_USER = data.settings.adminUser;
+                            localStorage.setItem('adminUser', data.settings.adminUser);
+                        }
+                        
+                        if (data.settings.adminPassword) {
+                            SECURITY_CONFIG.ADMIN_PASSWORD = data.settings.adminPassword;
+                            localStorage.setItem('adminPassword', data.settings.adminPassword);
+                        }
+                    }
+                    
+                    // Restaurar dispositivos
+                    if (data.devices && typeof data.devices === 'object') {
+                        for (const code in data.devices) {
+                            if (Array.isArray(data.devices[code])) {
+                                localStorage.setItem(`encDevices_${code}`, this.encryptData(JSON.stringify(data.devices[code])));
+                            }
+                        }
+                    }
+                    
+                    // Restaurar información de clientes
+                    if (data.clients && typeof data.clients === 'object') {
+                        for (const code in data.clients) {
+                            if (typeof data.clients[code] === 'object') {
+                                const clientInfo = data.clients[code];
+                                if (clientInfo.created) {
+                                    localStorage.setItem(`created_${code}`, clientInfo.created);
+                                    delete clientInfo.created;
+                                }
+                                localStorage.setItem(`client_${code}`, JSON.stringify(clientInfo));
+                            }
+                        }
+                    }
+                    
+                    return true;
+                } catch (e) {
+                    console.error("Error importing data:", e);
+                    return false;
+                }
+            }
+            
+            resetData() {
+                if (confirm('¿ESTÁ SEGURO? Esta acción eliminará todos los datos excepto los códigos originales. No se puede deshacer.')) {
+                    // Eliminar todos los datos excepto los códigos válidos originales
+                    const keysToKeep = ['validCodes', 'adminUser', 'adminPassword', 'maxDevices', 'inactivityTimeout', 'redirectUrl'];
+                    const keysToRemove = [];
+                    
+                    for (let i = 0; i < localStorage.length; i++) {
+                        const key = localStorage.key(i);
+                        if (!keysToKeep.includes(key) && 
+                            !key.startsWith('client_') && 
+                            !key.startsWith('encDevices_') && 
+                            !key.startsWith('created_')) {
+                            keysToRemove.push(key);
+                        }
+                    }
+                    
+                    // Eliminar dispositivos e información de clientes
+                    for (let i = 0; i < localStorage.length; i++) {
+                        const key = localStorage.key(i);
+                        if (key.startsWith('encDevices_') || key.startsWith('client_') || key.startsWith('created_')) {
+                            localStorage.removeItem(key);
+                        }
+                    }
+                    
+                    // Restablecer configuración por defecto
+                    localStorage.setItem('maxDevices', '3');
+                    localStorage.setItem('inactivityTimeout', '10');
+                    
+                    this.loadConfigFromStorage();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        // 👨‍💼 Sistema de Administración
+        class AdminSystem {
+            constructor(securitySystem) {
+                this.securitySystem = securitySystem;
+                this.currentCode = null;
+                this.initAdminEvents();
+                this.loadSettings();
+            }
+            
+            loadSettings() {
+                // Cargar configuraciones guardadas
+                const maxDevices = localStorage.getItem('maxDevices');
+                const inactivityTimeout = localStorage.getItem('inactivityTimeout');
+                const redirectUrl = localStorage.getItem('redirectUrl');
+                const adminUser = localStorage.getItem('adminUser');
+                
+                if (maxDevices) {
+                    document.getElementById('max-devices').value = maxDevices;
+                }
+                
+                if (inactivityTimeout) {
+                    document.getElementById('inactivity-timeout').value = inactivityTimeout;
+                }
+                
+                if (redirectUrl) {
+                    document.getElementById('redirect-url').value = redirectUrl;
+                }
+                
+                if (adminUser) {
+                    document.getElementById('admin-username').value = adminUser;
+                }
+            }
+            
+            initAdminEvents() {
+                // Enlace flotante para acceder al login de administración
+                document.getElementById('admin-access').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.getElementById('client-container').style.display = 'none';
+                    document.getElementById('admin-login').style.display = 'block';
+                });
+                
+                // Login de administrador
+                document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleAdminLogin();
+                });
+                
+                // Cerrar sesión
+                document.getElementById('logout-btn').addEventListener('click', () => {
+                    this.handleAdminLogout();
+                });
+                
+                // Navegación por pestañas
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const tab = e.target.getAttribute('data-tab');
+                        this.switchTab(tab);
+                    });
+                });
+                
+                // Generar nuevo código
+                document.getElementById('generate-code-btn').addEventListener('click', () => {
+                    this.showCodeEditModal();
+                });
+                
+                // Seleccionar código para ver dispositivos
+                document.getElementById('code-selector').addEventListener('change', (e) => {
+                    this.loadDevices(e.target.value);
+                });
+                
+                // Buscar código
+                document.getElementById('search-btn').addEventListener('click', () => {
+                    this.searchCodes();
+                });
+                
+                // Limpiar búsqueda
+                document.getElementById('clear-search').addEventListener('click', () => {
+                    document.getElementById('code-search').value = '';
+                    this.loadCodes();
+                });
+                
+                // Filtros
+                document.getElementById('filter-status').addEventListener('change', () => {
+                    this.applyFilters();
+                });
+                
+                document.getElementById('filter-devices').addEventListener('change', () => {
+                    this.applyFilters();
+                });
+                
+                document.getElementById('filter-sort').addEventListener('change', () => {
+                    this.applyFilters();
+                });
+                
+                // Guardar configuraciones
+                document.getElementById('save-settings').addEventListener('click', () => {
+                    this.saveSettings();
+                });
+                
+                // Guardar credenciales de administrador
+                document.getElementById('save-admin').addEventListener('click', () => {
+                    this.saveAdminCredentials();
+                });
+                
+                // Exportar datos
+                document.getElementById('export-data').addEventListener('click', () => {
+                    this.exportData();
+                });
+                
+                // Importar datos
+                document.getElementById('import-data').addEventListener('click', () => {
+                    this.importData();
+                });
+                
+                // Restablecer datos
+                document.getElementById('reset-data').addEventListener('click', () => {
+                    this.resetData();
+                });
+                
+                // Guardar código
+                document.getElementById('save-code-btn').addEventListener('click', () => {
+                    this.saveCode();
+                });
+                
+                // Cerrar modales
+                document.querySelectorAll('.close-modal').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.modal').forEach(modal => {
+                            modal.style.display = 'none';
+                        });
+                    });
+                });
+                
+                // Cerrar modal al hacer clic fuera
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            modal.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            handleAdminLogin() {
+                const username = document.getElementById('admin-user').value;
+                const password = document.getElementById('admin-password').value;
+                
+                if (username === SECURITY_CONFIG.ADMIN_USER && password === SECURITY_CONFIG.ADMIN_PASSWORD) {
+                    document.getElementById('admin-login').style.display = 'none';
+                    document.getElementById('admin-panel').style.display = 'block';
+                    this.loadAdminData();
+                } else {
+                    document.getElementById('admin-message').textContent = 'Credenciales incorrectas';
+                }
+            }
+            
+            handleAdminLogout() {
+                document.getElementById('admin-panel').style.display = 'none';
+                document.getElementById('client-container').style.display = 'block';
+                document.getElementById('admin-user').value = '';
+                document.getElementById('admin-password').value = '';
+                document.getElementById('admin-message').textContent = '';
+            }
+            
+            switchTab(tabName) {
+                // Desactivar todas las pestañas
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Activar la pestaña seleccionada
+                document.getElementById(tabName).classList.add('active');
+                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+                
+                // Recargar datos si es necesario
+                if (tabName === 'codes') {
+                    this.loadCodes();
+                } else if (tabName === 'devices') {
+                    this.loadCodeSelector();
+                    this.loadDevices();
+                } else if (tabName === 'dashboard') {
+                    this.loadDashboard();
+                } else if (tabName === 'settings') {
+                    this.loadSettings();
+                }
+            }
+            
+            loadAdminData() {
+                this.loadDashboard();
+                this.loadCodeSelector();
+            }
+            
+            loadDashboard() {
+                const codes = this.securitySystem.getAllCodes();
+                const activeCodes = codes.filter(code => code.active).length;
+                const inactiveCodes = codes.filter(code => !code.active).length;
+                const totalDevices = codes.reduce((sum, code) => sum + code.devices, 0);
+                const usagePercentage = Math.round((totalDevices / (codes.length * SECURITY_CONFIG.MAX_DEVICES)) * 100);
+                
+                // Actualizar estadísticas
+                document.getElementById('stat-active').textContent = activeCodes;
+                document.getElementById('stat-inactive').textContent = inactiveCodes;
+                document.getElementById('stat-devices').textContent = totalDevices;
+                document.getElementById('stat-usage').textContent = `${usagePercentage}%`;
+                
+                // Cargar códigos recientes (últimos 5)
+                const recentCodes = codes
+                    .sort((a, b) => b.created - a.created)
+                    .slice(0, 5);
+                
+                const recentCodesContainer = document.getElementById('recent-codes');
+                recentCodesContainer.innerHTML = '';
+                
+                recentCodes.forEach(codeData => {
+                    const codeElement = this.createCodeElement(codeData);
+                    recentCodesContainer.appendChild(codeElement);
+                });
+            }
+            
+            loadCodes() {
+                const codes = this.securitySystem.getAllCodes();
+                this.displayCodes(codes);
+            }
+            
+            applyFilters() {
+                const statusFilter = document.getElementById('filter-status').value;
+                const devicesFilter = document.getElementById('filter-devices').value;
+                const sortBy = document.getElementById('filter-sort').value;
+                const searchTerm = document.getElementById('code-search').value.toLowerCase();
+                
+                let filteredCodes = this.securitySystem.getAllCodes();
+                
+                // Aplicar filtro de estado
+                if (statusFilter === 'active') {
+                    filteredCodes = filteredCodes.filter(code => code.active);
+                } else if (statusFilter === 'inactive') {
+                    filteredCodes = filteredCodes.filter(code => !code.active);
+                }
+                
+                // Aplicar filtro de dispositivos
+                if (devicesFilter === 'full') {
+                    filteredCodes = filteredCodes.filter(code => code.devices >= SECURITY_CONFIG.MAX_DEVICES);
+                } else if (devicesFilter === 'available') {
+                    filteredCodes = filteredCodes.filter(code => code.devices < SECURITY_CONFIG.MAX_DEVICES);
+                }
+                
+                // Aplicar búsqueda
+                if (searchTerm) {
+                    filteredCodes = filteredCodes.filter(code => 
+                        code.code.toLowerCase().includes(searchTerm) ||
+                        (code.name && code.name.toLowerCase().includes(searchTerm)) ||
+                        (code.phone && code.phone.includes(searchTerm)) ||
+                        (code.email && code.email.toLowerCase().includes(searchTerm))
+                    );
+                }
+                
+                // Aplicar ordenamiento
+                switch (sortBy) {
+                    case 'recent':
+                        filteredCodes.sort((a, b) => b.created - a.created);
+                        break;
+                    case 'oldest':
+                        filteredCodes.sort((a, b) => a.created - b.created);
+                        break;
+                    case 'name':
+                        filteredCodes.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+                        break;
+                    case 'code':
+                        filteredCodes.sort((a, b) => a.code.localeCompare(b.code));
+                        break;
+                }
+                
+                this.displayCodes(filteredCodes);
+            }
+            
+            displayCodes(codes) {
+                const codesContainer = document.getElementById('all-codes');
+                codesContainer.innerHTML = '';
+                
+                if (codes.length === 0) {
+                    codesContainer.innerHTML = '<p>No se encontraron códigos</p>';
+                    return;
+                }
+                
+                codes.forEach(codeData => {
+                    const codeElement = this.createCodeElement(codeData);
+                    codesContainer.appendChild(codeElement);
+                });
+            }
+            
+            createCodeElement(codeData) {
+                const codeElement = document.createElement('div');
+                codeElement.className = `code-item ${codeData.active ? '' : 'inactive'}`;
+                
+                const createdDate = new Date(codeData.created).toLocaleDateString();
+                const lastAccess = codeData.lastAccess ? new Date(codeData.lastAccess).toLocaleDateString() : 'Nunca';
+                
+                codeElement.innerHTML = `
+                    <div class="code-info">
+                        <div class="code-header">
+                            <div class="code-value">${codeData.code}</div>
+                            <span class="status-badge ${codeData.active ? 'status-active' : 'status-inactive'}">
+                                ${codeData.active ? 'Activo' : 'Inactivo'}
+                            </span>
+                        </div>
+                        ${codeData.name ? `<div class="code-name">${codeData.name}</div>` : ''}
+                        ${codeData.phone ? `<div class="code-contact">📞 ${codeData.phone}</div>` : ''}
+                        ${codeData.email ? `<div class="code-contact">✉️ ${codeData.email}</div>` : ''}
+                        <div class="code-stats">
+                            <span>${codeData.devices}/${SECURITY_CONFIG.MAX_DEVICES} dispositivos</span>
+                            <span>• Creado: ${createdDate}</span>
+                            ${codeData.lastAccess ? `<span>• Último acceso: ${lastAccess}</span>` : ''}
+                        </div>
+                    </div>
+                    <div class="code-actions">
+                        <button class="action-btn btn-info" data-code="${codeData.code}">
+                            <i class="fas fa-info"></i>
+                        </button>
+                        <button class="action-btn btn-edit" data-code="${codeData.code}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        ${codeData.active ? 
+                            `<button class="action-btn btn-deactivate" data-code="${codeData.code}">
+                                <i class="fas fa-ban"></i>
+                            </button>` : 
+                            `<button class="action-btn btn-activate" data-code="${codeData.code}">
+                                <i class="fas fa-check"></i>
+                            </button>`
+                        }
+                    </div>
+                `;
+                
+                // Agregar event listeners a los botones
+                const infoBtn = codeElement.querySelector('.btn-info');
+                infoBtn.addEventListener('click', () => {
+                    this.showCodeDetails(codeData.code);
+                });
+                
+                const editBtn = codeElement.querySelector('.btn-edit');
+                editBtn.addEventListener('click', () => {
+                    this.showCodeEditModal(codeData.code);
+                });
+                
+                const toggleBtn = codeElement.querySelector(codeData.active ? '.btn-deactivate' : '.btn-activate');
+                toggleBtn.addEventListener('click', () => {
+                    this.toggleCodeStatus(codeData.code, !codeData.active);
+                });
+                
+                return codeElement;
+            }
+            
+            loadCodeSelector() {
+                const codes = this.securitySystem.getAllCodes();
+                const selector = document.getElementById('code-selector');
+                selector.innerHTML = '<option value="">Todos los dispositivos</option>';
+                
+                codes.forEach(codeData => {
+                    if (codeData.active && codeData.devices > 0) {
+                        const option = document.createElement('option');
+                        option.value = codeData.code;
+                        option.textContent = `${codeData.code} - ${codeData.name || 'Sin nombre'} (${codeData.devices} dispositivos)`;
+                        selector.appendChild(option);
+                    }
+                });
+            }
+            
+            loadDevices(codeFilter = '') {
+                const devices = this.securitySystem.getDevicesByCode(codeFilter);
+                const devicesContainer = document.getElementById('devices-list');
+                devicesContainer.innerHTML = '';
+                
+                if (devices.length === 0) {
+                    devicesContainer.innerHTML = '<p>No se encontraron dispositivos</p>';
+                    return;
+                }
+                
+                devices.forEach(device => {
+                    const deviceElement = document.createElement('div');
+                    deviceElement.className = 'device-item';
+                    
+                    const registerDate = new Date(device.timestamp).toLocaleDateString();
+                    const lastAccess = device.lastAccess ? new Date(device.lastAccess).toLocaleDateString() : registerDate;
+                    
+                    deviceElement.innerHTML = `
+                        <div class="device-info">
+                            <div class="device-id">Código: ${device.code} ${device.clientName ? `- ${device.clientName}` : ''}</div>
+                            <div class="device-id">ID: ${device.id}</div>
+                            <div class="device-meta">
+                                Navegador: ${device.ua}
+                            </div>
+                            <div class="device-meta">
+                                Registrado: ${registerDate} • Último acceso: ${lastAccess}
+                            </div>
+                        </div>
+                        <div class="code-actions">
+                            <button class="action-btn btn-deactivate" data-code="${device.code}" data-device="${device.id}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    // Agregar event listener al botón
+                    const btn = deviceElement.querySelector('.action-btn');
+                    btn.addEventListener('click', () => {
+                        this.removeDevice(device.code, device.id);
+                    });
+                    
+                    devicesContainer.appendChild(deviceElement);
+                });
+            }
+            
+            showCodeDetails(code) {
+                const codes = this.securitySystem.getAllCodes();
+                const codeData = codes.find(c => c.code === code);
+                
+                if (!codeData) return;
+                
+                const createdDate = new Date(codeData.created).toLocaleDateString();
+                const lastAccess = codeData.lastAccess ? new Date(codeData.lastAccess).toLocaleDateString() : 'Nunca';
+                const devices = this.securitySystem.getRegisteredDevices(code);
+                
+                let devicesHTML = '';
+                if (devices.length > 0) {
+                    devices.forEach(device => {
+                        const deviceDate = new Date(device.timestamp).toLocaleDateString();
+                        const lastAccess = device.lastAccess ? new Date(device.lastAccess).toLocaleDateString() : deviceDate;
+                        devicesHTML += `
+                            <div class="detail-row">
+                                <div class="detail-label">Dispositivo:</div>
+                                <div class="detail-value">${device.id}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Navegador:</div>
+                                <div class="detail-value">${device.ua}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Registrado:</div>
+                                <div class="detail-value">${deviceDate}</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Último acceso:</div>
+                                <div class="detail-value">${lastAccess}</div>
+                            </div>
+                            <hr>
+                        `;
+                    });
+                } else {
+                    devicesHTML = '<p>No hay dispositivos registrados</p>';
+                }
+                
+                document.getElementById('code-detail-content').innerHTML = `
+                    <div class="detail-section">
+                        <div class="detail-row">
+                            <div class="detail-label">Código:</div>
+                            <div class="detail-value">${codeData.code}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Estado:</div>
+                            <div class="detail-value">
+                                <span class="status-badge ${codeData.active ? 'status-active' : 'status-inactive'}">
+                                    ${codeData.active ? 'Activo' : 'Inactivo'}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Dispositivos:</div>
+                            <div class="detail-value">${codeData.devices}/${SECURITY_CONFIG.MAX_DEVICES}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Creado:</div>
+                            <div class="detail-value">${createdDate}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Último acceso:</div>
+                            <div class="detail-value">${lastAccess}</div>
+                        </div>
+                    </div>
+                    
+                    ${codeData.name || codeData.phone || codeData.email || codeData.notes ? `
+                    <div class="detail-section">
+                        <h4>Información del Cliente</h4>
+                        ${codeData.name ? `
+                        <div class="detail-row">
+                            <div class="detail-label">Nombre:</div>
+                            <div class="detail-value">${codeData.name}</div>
+                        </div>
+                        ` : ''}
+                        ${codeData.phone ? `
+                        <div class="detail-row">
+                            <div class="detail-label">Teléfono:</div>
+                            <div class="detail-value">${codeData.phone}</div>
+                        </div>
+                        ` : ''}
+                        ${codeData.email ? `
+                        <div class="detail-row">
+                            <div class="detail-label">Email:</div>
+                            <div class="detail-value">${codeData.email}</div>
+                        </div>
+                        ` : ''}
+                        ${codeData.notes ? `
+                        <div class="detail-row">
+                            <div class="detail-label">Notas:</div>
+                            <div class="detail-value">${codeData.notes}</div>
+                        </div>
+                        ` : ''}
+                    </div>
+                    ` : ''}
+                    
+                    <div class="detail-section">
+                        <h4>Dispositivos Registrados</h4>
+                        ${devicesHTML}
+                    </div>
+                `;
+                
+                document.getElementById('code-detail-modal').style.display = 'flex';
+            }
+            
+            showCodeEditModal(code = null) {
+                this.currentCode = code;
+                const modal = document.getElementById('code-edit-modal');
+                const title = document.getElementById('code-edit-title');
+                
+                if (code) {
+                    // Editar código existente
+                    title.textContent = 'Editar Código';
+                    const codes = this.securitySystem.getAllCodes();
+                    const codeData = codes.find(c => c.code === code);
+                    
+                    if (codeData) {
+                        document.getElementById('edit-code').value = codeData.code;
+                        document.getElementById('edit-code').disabled = true;
+                        document.getElementById('edit-name').value = codeData.name || '';
+                        document.getElementById('edit-phone').value = codeData.phone || '';
+                        document.getElementById('edit-email').value = codeData.email || '';
+                        document.getElementById('edit-notes').value = codeData.notes || '';
+                        document.getElementById('edit-status').value = codeData.active ? 'active' : 'inactive';
+                    }
+                } else {
+                    // Nuevo código
+                    title.textContent = 'Nuevo Código';
+                    document.getElementById('edit-code').value = '';
+                    document.getElementById('edit-code').disabled = false;
+                    document.getElementById('edit-name').value = '';
+                    document.getElementById('edit-phone').value = '';
+                    document.getElementById('edit-email').value = '';
+                    document.getElementById('edit-notes').value = '';
+                    document.getElementById('edit-status').value = 'active';
+                }
+                
+                modal.style.display = 'flex';
+            }
+            
+            saveCode() {
+                const code = document.getElementById('edit-code').value.toUpperCase();
+                const name = document.getElementById('edit-name').value;
+                const phone = document.getElementById('edit-phone').value;
+                const email = document.getElementById('edit-email').value;
+                const notes = document.getElementById('edit-notes').value;
+                const status = document.getElementById('edit-status').value;
+                
+                if (!code || !/^[A-Z0-9]{4}$/.test(code)) {
+                    alert('El código debe tener 4 caracteres alfanuméricos');
+                    return;
+                }
+                
+                // Guardar información del cliente
+                this.securitySystem.saveClientInfo(code, {
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    notes: notes
+                });
+                
+                // Actualizar estado del código
+                this.securitySystem.setCodeStatus(code, status === 'active');
+                
+                // Si es un código nuevo, agregarlo a la lista
+                if (!this.currentCode && !VALID_CODES.includes(code)) {
+                    VALID_CODES.push(code);
+                    localStorage.setItem('validCodes', JSON.stringify(VALID_CODES));
+                    localStorage.setItem(`created_${code}`, new Date().toISOString());
+                }
+                
+                alert('Código guardado correctamente');
+                document.getElementById('code-edit-modal').style.display = 'none';
+                
+                // Recargar datos
+                this.loadCodes();
+                this.loadCodeSelector();
+                this.loadDashboard();
+            }
+            
+            searchCodes() {
+                this.applyFilters();
+            }
+            
+            toggleCodeStatus(code, activate) {
+                const success = this.securitySystem.setCodeStatus(code, activate);
+                
+                if (success) {
+                    this.loadDashboard();
+                    this.loadCodes();
+                    this.loadCodeSelector();
+                    
+                    alert(`Código ${code} ${activate ? 'activado' : 'desactivado'} correctamente`);
+                } else {
+                    alert('Error al cambiar el estado del código');
+                }
+            }
+            
+            removeDevice(code, deviceId) {
+                if (confirm('¿Estás seguro de que deseas eliminar este dispositivo?')) {
+                    const success = this.securitySystem.removeDevice(code, deviceId);
+                    
+                    if (success) {
+                        this.loadDevices(document.getElementById('code-selector').value);
+                        this.loadDashboard();
+                        this.loadCodes();
+                        this.loadCodeSelector();
+                        
+                        alert('Dispositivo eliminado correctamente');
+                    } else {
+                        alert('Error al eliminar el dispositivo');
+                    }
+                }
+            }
+            
+           generateNewCode() {
+                const newCode = this.securitySystem.generateNewCode();
+                
+                // Abrir modal de edición con el nuevo código generado
+                this.showCodeEditModal(newCode);
+                
+                // Mostrar mensaje de confirmación
+                setTimeout(() => {
+                    alert(`¡Nuevo código generado: ${newCode}! Complete la información del cliente.`);
+                }, 300);
+            }
+            
+            saveSettings() {
+                const maxDevices = parseInt(document.getElementById('max-devices').value);
+                const inactivityTimeout = parseInt(document.getElementById('inactivity-timeout').value);
+                const redirectUrl = document.getElementById('redirect-url').value;
+                
+                if (!maxDevices || maxDevices < 1 || maxDevices > 10) {
+                    alert('El límite de dispositivos debe ser entre 1 y 10');
+                    return;
+                }
+                
+                if (!inactivityTimeout || inactivityTimeout < 1 || inactivityTimeout > 60) {
+                    alert('El tiempo de inactividad debe ser entre 1 y 60 minutos');
+                    return;
+                }
+                
+                if (!redirectUrl) {
+                    alert('La URL de redirección es requerida');
+                    return;
+                }
+                
+                const success = this.securitySystem.updateSettings({
+                    maxDevices: maxDevices,
+                    inactivityTimeout: inactivityTimeout,
+                    redirectUrl: redirectUrl
+                });
+                
+                if (success) {
+                    alert('Configuración guardada correctamente');
+                } else {
+                    alert('Error al guardar la configuración');
+                }
+            }
+            
+            saveAdminCredentials() {
+                const username = document.getElementById('admin-username').value;
+                const password = document.getElementById('admin-password').value;
+                const passwordConfirm = document.getElementById('admin-password-confirm').value;
+                
+                if (!username) {
+                    alert('El usuario es requerido');
+                    return;
+                }
+                
+                if (password && password !== passwordConfirm) {
+                    alert('Las contraseñas no coinciden');
+                    return;
+                }
+                
+                const settings = {
+                    adminUser: username
+                };
+                
+                if (password) {
+                    settings.adminPassword = password;
+                }
+                
+                const success = this.securitySystem.updateSettings(settings);
+                
+                if (success) {
+                    alert('Credenciales guardadas correctamente');
+                    document.getElementById('admin-password').value = '';
+                    document.getElementById('admin-password-confirm').value = '';
+                } else {
+                    alert('Error al guardar las credenciales');
+                }
+            }
+            
+            exportData() {
+                const data = this.securitySystem.exportData();
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `backup-sistema-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert('Datos exportados correctamente');
+            }
+            
+            importData() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                
+                input.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const success = this.securitySystem.importData(event.target.result);
+                        
+                        if (success) {
+                            this.loadSettings();
+                            this.loadAdminData();
+                            alert('Datos importados correctamente');
+                        } else {
+                            alert('Error al importar los datos. Verifique el archivo.');
+                        }
+                    };
+                    
+                    reader.readAsText(file);
+                };
+                
+                input.click();
+            }
+            
+            resetData() {
+                const success = this.securitySystem.resetData();
+                
+                if (success) {
+                    this.loadSettings();
+                    this.loadAdminData();
+                    alert('Datos restablecidos correctamente');
+                }
+            }
+        }
+
+        // 🚀 Inicialización del Sistema
+        document.addEventListener('DOMContentLoaded', () => {
+            const securitySystem = new CodeSecuritySystem();
+            const adminSystem = new AdminSystem(securitySystem);
+            
+            const accessForm = document.getElementById('access-form');
+            const codeInput = document.getElementById('code');
+            const messageEl = document.getElementById('message');
+            const deviceInfoEl = document.getElementById('device-info');
+
+            // Mostrar código guardado si existe
+            const savedCode = localStorage.getItem('currentValidCode');
+            if (savedCode) {
+                codeInput.value = savedCode;
+                const info = securitySystem.getDeviceRegistrationInfo(savedCode);
+                updateDeviceInfoDisplay(info);
+            }
+
+            // 🖊️ Manejar entrada de código
+            codeInput.addEventListener('input', function() {
+                this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                
+                if (this.value.length === 4) {
+                    const info = securitySystem.getDeviceRegistrationInfo(this.value);
+                    updateDeviceInfoDisplay(info);
+                } else {
+                    deviceInfoEl.textContent = '';
+                }
+            });
+
+            // 📋 Mostrar información de dispositivos
+            function updateDeviceInfoDisplay(info) {
+                if (!info || info.registeredDevices === 0) {
+                    deviceInfoEl.textContent = '';
+                    return;
+                }
+
+                if (info.isRegistered) {
+                    deviceInfoEl.innerHTML = `✅ Este dispositivo está registrado<br>
+                                            <small>Dispositivos: ${info.registeredDevices}/${info.maxDevices}</small>`;
+                    deviceInfoEl.className = 'success';
+                } else if (info.availableSlots > 0) {
+                    deviceInfoEl.innerHTML = `⚠️ Este código tiene ${info.registeredDevices} de ${info.maxDevices} dispositivos<br>
+                                            <small>Aún puedes registrar ${info.availableSlots} más</small>`;
+                    deviceInfoEl.className = 'warning';
+                } else {
+                    deviceInfoEl.innerHTML = `❌ Límite de dispositivos alcanzado<br>
+                                            <small>Este código ya tiene ${info.maxDevices} dispositivos registrados</small>`;
+                    deviceInfoEl.className = 'error';
+                }
+            }
+
+            // 🎯 Manejar envío del formulario
+            accessForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const code = codeInput.value.trim();
+                
+                // Validación básica
+                if (code.length !== 4 || !/^[A-Z0-9]{4}$/.test(code)) {
+                    showMessage("❌ El código debe tener exactamente 4 caracteres alfanuméricos", "error");
+                    return;
+                }
+
+                showMessage("🔒 Verificando código...", "info");
+                
+                const result = await securitySystem.validateAccessCode(code);
+                
+                if (result.valid) {
+                    showMessage("✅ Acceso concedido...", "success");
+                    // ✅ Redirigir al NUEVO ENLACE (evitando 404)
+                    setTimeout(() => {
+                        window.location.href = SECURITY_CONFIG.REDIRECT_URL;
+                    }, 1500);
+                } else {
+                    showMessage(`❌ ${result.error}`, "error");
+                }
+            });
+
+            // 💬 Mostrar mensajes de estado
+            function showMessage(text, type) {
+                messageEl.innerHTML = text;
+                messageEl.className = type;
+            }
+        });
+    </script>
 </body>
 </html>
