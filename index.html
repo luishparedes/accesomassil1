@@ -792,81 +792,187 @@
             ADMIN_PASSWORD: "admin123" // Cambiar en producción
         };
 
-        // ===== PROTECCIÓN CONTRA F12 Y HERRAMIENTAS DE DESARROLLO =====
+        // ===== PROTECCIÓN CONTRA F12 Y HERRAMIENTAS DE DESARROLLO MEJORADA =====
 (function() {
-    // Detectar tecla F12 y combinaciones de teclas
+    'use strict';
+    
+    let devToolsOpened = false;
+    
+    // 🔥 DETECCIÓN AVANZADA DE HERRAMIENTAS DE DESARROLLO
+    function detectDevTools() {
+        const widthThreshold = window.outerWidth - window.innerWidth > 160;
+        const heightThreshold = window.outerHeight - window.innerHeight > 160;
+        
+        if (widthThreshold || heightThreshold) {
+            handleSecurityBreach();
+            return;
+        }
+        
+        // Método de tiempo de ejecución
+        const start = performance.now();
+        debugger;
+        const end = performance.now();
+        
+        if (end - start > 100) {
+            handleSecurityBreach();
+            return;
+        }
+        
+        // Verificar consola
+        const element = new Image();
+        Object.defineProperty(element, 'id', {
+            get: function() {
+                handleSecurityBreach();
+                return '';
+            }
+        });
+        
+        console.log(element);
+        console.clear();
+    }
+    
+    // 🚨 MANEJO DE VIOLACIÓN DE SEGURIDAD
+    function handleSecurityBreach() {
+        if (devToolsOpened) return;
+        devToolsOpened = true;
+        
+        // 🔥 BLOQUEAR COMPLETAMENTE LA PÁGINA
+        document.body.innerHTML = `
+            <div style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #1a1a1a;
+                color: white;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 99999;
+                font-family: Arial, sans-serif;
+                text-align: center;
+                padding: 20px;
+            ">
+                <div style="font-size: 48px; margin-bottom: 20px;">🚫</div>
+                <h1 style="color: #ff4444; margin-bottom: 20px;">ACCESO BLOQUEADO</h1>
+                <p style="font-size: 18px; margin-bottom: 10px;">El uso de herramientas de desarrollo no está permitido</p>
+                <p style="font-size: 14px; color: #ccc; margin-bottom: 30px;">
+                    Esta acción ha sido registrada por motivos de seguridad
+                </p>
+                <div style="background: #2a2a2a; padding: 15px; border-radius: 8px; border-left: 4px solid #ff4444;">
+                    <p style="margin: 5px 0;">🔒 Sistema de Seguridad Activado</p>
+                    <p style="margin: 5px 0; font-size: 12px;">Si necesitas acceso, contacta al administrador</p>
+                </div>
+            </div>
+        `;
+        
+        // 🔄 INTENTAR CERRAR LA VENTANA
+        setTimeout(() => {
+            try {
+                window.close();
+                // Si no se puede cerrar, redirigir
+                window.location.href = SECURITY_CONFIG.REDIRECT_URL;
+            } catch (e) {
+                window.location.href = SECURITY_CONFIG.REDIRECT_URL;
+            }
+        }, 3000);
+        
+        // 📍 PREVENIR CUALQUIER INTERACCIÓN
+        document.addEventListener('keydown', blockAllKeys);
+        document.addEventListener('contextmenu', blockAllEvents);
+        document.addEventListener('click', blockAllEvents);
+        document.addEventListener('mousedown', blockAllEvents);
+    }
+    
+    function blockAllKeys(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+    }
+    
+    function blockAllEvents(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+    }
+    
+    // 🎯 BLOQUEO DE TECLAS DIRECTAS
     document.addEventListener('keydown', function(e) {
         // Bloquear F12
         if (e.key === 'F12' || e.keyCode === 123) {
             e.preventDefault();
-            mostrarAdvertenciaSeguridad();
+            e.stopPropagation();
+            handleSecurityBreach();
             return false;
         }
         
-        // Bloquear Ctrl+Shift+I (DevTools)
+        // Bloquear Ctrl+Shift+I
         if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.keyCode === 73)) {
             e.preventDefault();
-            mostrarAdvertenciaSeguridad();
+            e.stopPropagation();
+            handleSecurityBreach();
             return false;
         }
         
-        // Bloquear Ctrl+Shift+J (Console)
+        // Bloquear Ctrl+Shift+J
         if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.keyCode === 74)) {
             e.preventDefault();
-            mostrarAdvertenciaSeguridad();
+            e.stopPropagation();
+            handleSecurityBreach();
             return false;
         }
         
-        // Bloquear Ctrl+Shift+C (Inspector)
+        // Bloquear Ctrl+Shift+C
         if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.keyCode === 67)) {
             e.preventDefault();
-            mostrarAdvertenciaSeguridad();
+            e.stopPropagation();
+            handleSecurityBreach();
             return false;
         }
         
-        // Bloquear Ctrl+U (Ver código fuente)
+        // Bloquear Ctrl+U
         if (e.ctrlKey && (e.key === 'U' || e.keyCode === 85)) {
             e.preventDefault();
-            mostrarAdvertenciaSeguridad();
+            e.stopPropagation();
+            handleSecurityBreach();
+            return false;
+        }
+        
+        // Bloquear Ctrl+Shift+K (Firefox)
+        if (e.ctrlKey && e.shiftKey && (e.key === 'K' || e.keyCode === 75)) {
+            e.preventDefault();
+            e.stopPropagation();
+            handleSecurityBreach();
             return false;
         }
     });
     
-    // Bloquear clic derecho (inspeccionar elemento)
+    // 🖱️ BLOQUEO DE CLIC DERECHO
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
-        mostrarAdvertenciaSeguridad();
+        e.stopPropagation();
+        handleSecurityBreach();
         return false;
     });
     
-    // Detectar si se abren las herramientas de desarrollo
-    function detectarDevTools() {
-        const umbral = 160;
-        const inicio = performance.now();
-        debugger;
-        const fin = performance.now();
-        
-        if (fin - inicio > umbral) {
-            mostrarAdvertenciaSeguridad();
-        }
-    }
+    // 🔍 DETECCIÓN CONTINUA
+    const checkDevTools = setInterval(detectDevTools, 500);
     
-    function mostrarAdvertenciaSeguridad() {
-        // Mostrar mensaje en consola si está abierta
-        console.log('%c⚠️ ACCESO RESTRINGIDO ⚠️', 'color: red; font-size: 20px; font-weight: bold;');
-        console.log('El uso de herramientas de desarrollo está restringido en esta aplicación.');
-        
-        // Mostrar alerta al usuario
-        alert('⚠️ Acceso restringido\nEl uso de F12 y herramientas de desarrollo no está permitido en esta aplicación.');
-        
-        // Opcional: Redirigir después de la alerta
-        setTimeout(() => {
-            window.location.href = SECURITY_CONFIG.REDIRECT_URL;
-        }, 2000);
-    }
+    // 🛡️ PROTECCIÓN CONTRA SOBREESCRITURA
+    Object.defineProperty(window, 'console', {
+        value: console,
+        writable: false,
+        configurable: false
+    });
     
-    // Verificar periódicamente si las herramientas están abiertas
-    setInterval(detectarDevTools, 1000);
+    // 📢 MENSAJE INICIAL DE SEGURIDAD
+    console.log('%c🔒 SISTEMA PROTEGIDO', 'color: red; font-size: 20px; font-weight: bold;');
+    console.log('%cEl acceso a herramientas de desarrollo está restringido', 'color: orange; font-size: 14px;');
+    
 })();
 
         // 🏷️ Códigos válidos (ofuscados con encoding múltiple)
