@@ -781,6 +781,9 @@
     </div>
 
     <script>
+        // ===== DETECCIÓN DE DISPOSITIVO =====
+        const esDispositivoMovil = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
         // 🔐 Configuración de Seguridad Avanzada
         const SECURITY_CONFIG = {
             MAX_DEVICES: 3,
@@ -792,13 +795,19 @@
             ADMIN_PASSWORD: "admin123" // Cambiar en producción
         };
 
-        // ===== PROTECCIÓN CONTRA F12 Y HERRAMIENTAS DE DESARROLLO MEJORADA =====
+        // ===== PROTECCIÓN CONTRA F12 Y HERRAMIENTAS DE DESARROLLO MEJORADA (SOLO COMPUTADORA) =====
         (function() {
             'use strict';
             
+            // Si es dispositivo móvil, NO activar protección F12
+            if (esDispositivoMovil) {
+                console.log('Dispositivo móvil detectado, protección F12 desactivada');
+                return;
+            }
+            
             let devToolsOpened = false;
             
-            // 🔥 DETECCIÓN AVANZADA DE HERRAMIENTAS DE DESARROLLO
+            // 🔥 DETECCIÓN AVANZADA DE HERRAMIENTAS DE DESARROLLO (SOLO COMPUTADORA)
             function detectDevTools() {
                 const widthThreshold = window.outerWidth - window.innerWidth > 160;
                 const heightThreshold = window.outerHeight - window.innerHeight > 160;
@@ -889,7 +898,7 @@
                 return false;
             }
             
-            // 🎯 BLOQUEO DE TECLAS DIRECTAS - CORREGIDO
+            // 🎯 BLOQUEO DE TECLAS DIRECTAS - CORREGIDO (SOLO COMPUTADORA)
             document.addEventListener('keydown', function(e) {
                 // Bloquear F12
                 if (e.key === 'F12' || e.keyCode === 123) {
@@ -940,7 +949,7 @@
                 }
             });
             
-            // 🖱️ BLOQUEO DE CLIC DERECHO
+            // 🖱️ BLOQUEO DE CLIC DERECHO (SOLO COMPUTADORA)
             document.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -948,7 +957,7 @@
                 return false;
             });
             
-            // 🔍 DETECCIÓN CONTINUA
+            // 🔍 DETECCIÓN CONTINUA (SOLO COMPUTADORA)
             const checkDevTools = setInterval(detectDevTools, 500);
             
             // 🛡️ PROTECCIÓN CONTRA SOBREESCRITURA
