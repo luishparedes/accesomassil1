@@ -14,9 +14,10 @@
         }
         
         body {
-            background-color: #f0f2f5;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
         }
         
         /* Contenedor principal de cliente */
@@ -24,48 +25,105 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            padding: 20px;
         }
         
         .container {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             text-align: center;
-            width: 90%;
-            max-width: 400px;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .container h1 {
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            font-size: 1.8rem;
         }
         
         input, select, textarea {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
         
         input[type="text"] {
             text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
         }
         
         button {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 5px;
+            padding: 15px;
+            border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            font-size: 14px;
-            margin-top: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
         }
         
-        .error { color: #e74c3c; }
-        .success { color: #27ae60; }
-        .warning { color: #f39c12; }
-        .info { color: #3498db; }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .error { 
+            color: #e74c3c; 
+            background: #ffeaea;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #e74c3c;
+        }
+        .success { 
+            color: #27ae60; 
+            background: #e8f6ef;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #27ae60;
+        }
+        .warning { 
+            color: #f39c12; 
+            background: #fef9e7;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #f39c12;
+        }
+        .info { 
+            color: #3498db; 
+            background: #ebf5fb;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
         
         /* Panel de administración */
         .admin-panel {
@@ -75,46 +133,54 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #f5f7fa;
+            background: #f8f9fa;
             z-index: 1000;
             overflow-y: auto;
         }
         
         .admin-header {
-            background: #2c3e50;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
-            padding: 1rem 2rem;
+            padding: 1.2rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         .admin-nav {
             background: #34495e;
-            padding: 0.5rem 2rem;
+            padding: 1rem 2rem;
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             flex-wrap: wrap;
+            border-bottom: 1px solid #4a6572;
         }
         
         .nav-btn {
             background: transparent;
             border: none;
             color: #ecf0f1;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
             width: auto;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .nav-btn:hover, .nav-btn.active {
             background: #3498db;
+            transform: translateY(-1px);
         }
         
         .admin-content {
             padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
         
         .dashboard-cards {
@@ -126,79 +192,98 @@
         
         .card {
             background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
         }
         
         .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2.8rem;
+            margin-bottom: 1.2rem;
+            opacity: 0.8;
         }
         
         .card-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
             color: #2c3e50;
+            font-weight: 600;
         }
         
         .card-value {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: bold;
             color: #3498db;
         }
         
-        .card.active { border-top: 4px solid #2ecc71; }
+        .card.active { border-top: 4px solid #27ae60; }
         .card.inactive { border-top: 4px solid #e74c3c; }
         .card.devices { border-top: 4px solid #3498db; }
         .card.usage { border-top: 4px solid #f39c12; }
         
         .admin-section {
             background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             margin-bottom: 2rem;
+            border: 1px solid #f0f0f0;
         }
         
         .section-title {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            margin-bottom: 1.8rem;
             color: #2c3e50;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f8f9fa;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-weight: 600;
         }
         
         .section-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.8rem;
+            flex-wrap: wrap;
         }
         
         .code-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.2rem;
         }
         
         .code-item {
             background: #f8f9fa;
-            border-radius: 6px;
-            padding: 1rem;
+            border-radius: 10px;
+            padding: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 4px solid #2ecc71;
+            border-left: 5px solid #27ae60;
             flex-direction: column;
             align-items: flex-start;
-            gap: 0.5rem;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+        
+        .code-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .code-item.inactive {
             border-left-color: #e74c3c;
+            opacity: 0.8;
         }
         
         .code-info {
@@ -210,31 +295,37 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
         
         .code-value {
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            color: #2c3e50;
+            letter-spacing: 1px;
         }
         
         .code-name {
-            font-weight: 500;
+            font-weight: 600;
             color: #2c3e50;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
         }
         
         .code-contact {
-            font-size: 0.9rem;
-            color: #7f8c8d;
+            font-size: 0.95rem;
+            color: #6c757d;
             margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .code-stats {
-            font-size: 0.85rem;
-            color: #7f8c8d;
+            font-size: 0.9rem;
+            color: #6c757d;
             display: flex;
-            gap: 0.5rem;
+            gap: 1rem;
             flex-wrap: wrap;
         }
         
@@ -246,48 +337,62 @@
         }
         
         .action-btn {
-            padding: 0.4rem 0.6rem;
+            padding: 0.6rem 0.8rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.4rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
         }
         
         .btn-activate {
-            background: #2ecc71;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white;
         }
         
         .btn-deactivate {
-            background: #e74c3c;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
         }
         
         .btn-edit {
-            background: #3498db;
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
         }
         
         .btn-info {
-            background: #f39c12;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
             color: white;
         }
         
         .device-list {
             display: grid;
-            gap: 1rem;
+            gap: 1.2rem;
         }
         
         .device-item {
             background: #f8f9fa;
-            border-radius: 6px;
-            padding: 1rem;
+            border-radius: 10px;
+            padding: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .device-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .device-info {
@@ -296,44 +401,59 @@
         
         .device-id {
             font-weight: bold;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
         }
         
         .device-meta {
-            font-size: 0.85rem;
-            color: #7f8c8d;
+            font-size: 0.9rem;
+            color: #6c757d;
         }
         
         .admin-login {
             display: none;
-            max-width: 400px;
+            max-width: 450px;
             margin: 100px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .admin-link {
             position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background: #2c3e50;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            font-size: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-size: 22px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-link:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
         
         .tab-content {
             display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .tab-content.active {
@@ -341,30 +461,32 @@
         }
         
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-align: left;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+            margin-bottom: 0.7rem;
+            font-weight: 600;
+            color: #2c3e50;
         }
         
         .filters {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.8rem;
             background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 6px;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
         }
         
         .search-box {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
             display: flex;
-            gap: 0.5rem;
+            gap: 0.8rem;
         }
         
         .search-box input {
@@ -375,24 +497,27 @@
         .search-box button {
             width: auto;
             margin: 0;
+            padding: 0 1.5rem;
         }
         
         .status-badge {
             display: inline-block;
-            padding: 0.2rem 0.5rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
         
         .status-active {
             background: #e8f5e9;
-            color: #2ecc71;
+            color: #27ae60;
+            border: 1px solid #27ae60;
         }
         
         .status-inactive {
             background: #ffebee;
             color: #e74c3c;
+            border: 1px solid #e74c3c;
         }
         
         .modal {
@@ -402,64 +527,96 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 2000;
             align-items: center;
             justify-content: center;
+            animation: fadeIn 0.3s ease;
         }
         
         .modal-content {
             background: white;
-            border-radius: 8px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 500px;
+            border-radius: 12px;
+            padding: 2.5rem;
+            width: 95%;
+            max-width: 550px;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 1px solid #e9ecef;
         }
         
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 1.8rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f8f9fa;
+        }
+        
+        .modal-header h3 {
+            color: #2c3e50;
+            font-weight: 600;
         }
         
         .close-modal {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
-            color: #7f8c8d;
+            color: #6c757d;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: #e74c3c;
         }
         
         .detail-row {
             display: flex;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            padding: 0.5rem 0;
         }
         
         .detail-label {
-            font-weight: 500;
-            width: 120px;
-            color: #7f8c8d;
+            font-weight: 600;
+            width: 140px;
+            color: #6c757d;
+            flex-shrink: 0;
         }
         
         .detail-value {
             flex: 1;
+            color: #2c3e50;
         }
         
         .detail-section {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #f8f9fa;
         }
         
         .detail-section:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         @media (max-width: 768px) {
@@ -479,6 +636,20 @@
                 flex-direction: column;
                 gap: 0.5rem;
             }
+            
+            .admin-content {
+                padding: 1rem;
+            }
+            
+            .container, .admin-login {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
         }
     </style>
 </head>
@@ -486,7 +657,7 @@
     <!-- Interfaz principal para clientes -->
     <div id="client-container">
         <div class="container">
-            <h1>🔒 Acceso al Sistema</h1>
+            <h1><i class="fas fa-shield-alt"></i> Acceso al Sistema</h1>
             <form id="access-form">
                 <input 
                     type="text" 
@@ -496,13 +667,18 @@
                     maxlength="4"
                     pattern="[A-Z0-9]{4}"
                     title="4 letras/números (mayúsculas)"
+                    autocomplete="off"
                 >
-                <button type="submit">INGRESAR</button>
+                <button type="submit" id="submit-btn">
+                    <i class="fas fa-lock"></i> INGRESAR
+                </button>
             </form>
-            <p id="message" class="error"></p>
-            <p id="device-info" class="info"></p>
-            <p class="warning"><small>Horario de soporte: <strong>10:00 AM - 4:00 PM</strong></small></p>
-            <p><small>¿Problemas? Contacta a soporte: <strong>0412-527-8450</strong></small></p>
+            <p id="message"></p>
+            <p id="device-info"></p>
+            <div class="info">
+                <p><strong>Horario de soporte:</strong> 10:00 AM - 4:00 PM</p>
+                <p><strong>Contacto:</strong> 0412-527-8450</p>
+            </div>
         </div>
         
         <!-- Enlace flotante para acceder al panel de administración -->
@@ -517,15 +693,15 @@
         <form id="admin-login-form">
             <div class="form-group">
                 <label for="admin-user">Usuario:</label>
-                <input type="text" id="admin-user" placeholder="Usuario" required>
+                <input type="text" id="admin-user" placeholder="Usuario" required autocomplete="off">
             </div>
             <div class="form-group">
                 <label for="admin-password">Contraseña:</label>
-                <input type="password" id="admin-password" placeholder="Contraseña" required>
+                <input type="password" id="admin-password" placeholder="Contraseña" required autocomplete="off">
             </div>
             <button type="submit"><i class="fas fa-sign-in-alt"></i> ACCEDER</button>
         </form>
-        <p id="admin-message" class="error"></p>
+        <p id="admin-message"></p>
     </div>
 
     <!-- Panel de administración -->
@@ -549,7 +725,7 @@
                 
                 <div class="dashboard-cards">
                     <div class="card active">
-                        <div class="card-icon">
+                        <div class="card-icon" style="color: #27ae60;">
                             <i class="fas fa-check-circle"></i>
                         </div>
                         <div class="card-title">Códigos Activos</div>
@@ -557,7 +733,7 @@
                     </div>
                     
                     <div class="card inactive">
-                        <div class="card-icon">
+                        <div class="card-icon" style="color: #e74c3c;">
                             <i class="fas fa-times-circle"></i>
                         </div>
                         <div class="card-title">Códigos Inactivos</div>
@@ -565,7 +741,7 @@
                     </div>
                     
                     <div class="card devices">
-                        <div class="card-icon">
+                        <div class="card-icon" style="color: #3498db;">
                             <i class="fas fa-laptop"></i>
                         </div>
                         <div class="card-title">Dispositivos Registrados</div>
@@ -573,7 +749,7 @@
                     </div>
                     
                     <div class="card usage">
-                        <div class="card-icon">
+                        <div class="card-icon" style="color: #f39c12;">
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <div class="card-title">Uso Promedio</div>
@@ -584,7 +760,10 @@
                 <div class="admin-section">
                     <h3 class="section-title">Códigos Recientes</h3>
                     <div class="code-grid" id="recent-codes">
-                        <!-- Los códigos se cargarán dinámicamente -->
+                        <div class="info" style="text-align: center; padding: 2rem;">
+                            <i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                            <p>No hay códigos registrados aún</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -626,7 +805,7 @@
                     
                     <div class="search-box">
                         <input type="text" id="code-search" placeholder="Buscar por código, nombre, teléfono...">
-                        <button id="search-btn"><i class="fas fa-search"></i></button>
+                        <button id="search-btn" class="action-btn btn-edit"><i class="fas fa-search"></i> Buscar</button>
                         <button id="clear-search" class="action-btn btn-deactivate"><i class="fas fa-times"></i> Limpiar</button>
                     </div>
                     
@@ -637,7 +816,10 @@
                     </div>
                     
                     <div class="code-grid" id="all-codes">
-                        <!-- Los códigos se cargarán dinámicamente -->
+                        <div class="info" style="text-align: center; padding: 2rem;">
+                            <i class="fas fa-key" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                            <p>No hay códigos configurados</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -655,7 +837,10 @@
                     </div>
                     
                     <div class="device-list" id="devices-list">
-                        <!-- Los dispositivos se cargarán dinámicamente -->
+                        <div class="info" style="text-align: center; padding: 2rem;">
+                            <i class="fas fa-laptop" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                            <p>No hay dispositivos registrados</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -678,7 +863,7 @@
                     
                     <div class="form-group">
                         <label>URL de redirección:</label>
-                        <input type="text" id="redirect-url" placeholder="https://ejemplo.com">
+                        <input type="text" id="redirect-url" placeholder="https://ejemplo.com" value="https://luishparedes.github.io/massiel/">
                     </div>
                     
                     <button id="save-settings" class="action-btn btn-activate">
@@ -690,7 +875,7 @@
                     <h3 class="section-title">Credenciales de Administrador</h3>
                     <div class="form-group">
                         <label>Usuario:</label>
-                        <input type="text" id="admin-username" placeholder="Usuario administrador">
+                        <input type="text" id="admin-username" placeholder="Usuario administrador" value="admin">
                     </div>
                     
                     <div class="form-group">
@@ -751,23 +936,23 @@
             </div>
             <div class="form-group">
                 <label for="edit-code">Código:</label>
-                <input type="text" id="edit-code" maxlength="4" pattern="[A-Z0-9]{4}" required>
+                <input type="text" id="edit-code" maxlength="4" pattern="[A-Z0-9]{4}" required autocomplete="off">
             </div>
             <div class="form-group">
                 <label for="edit-name">Nombre del cliente:</label>
-                <input type="text" id="edit-name">
+                <input type="text" id="edit-name" placeholder="Nombre completo">
             </div>
             <div class="form-group">
                 <label for="edit-phone">Teléfono:</label>
-                <input type="text" id="edit-phone">
+                <input type="text" id="edit-phone" placeholder="Número de contacto">
             </div>
             <div class="form-group">
                 <label for="edit-email">Email:</label>
-                <input type="email" id="edit-email">
+                <input type="email" id="edit-email" placeholder="correo@ejemplo.com">
             </div>
             <div class="form-group">
                 <label for="edit-notes">Notas:</label>
-                <textarea id="edit-notes" rows="3"></textarea>
+                <textarea id="edit-notes" rows="3" placeholder="Información adicional..."></textarea>
             </div>
             <div class="form-group">
                 <label for="edit-status">Estado:</label>
@@ -776,326 +961,144 @@
                     <option value="inactive">Inactivo</option>
                 </select>
             </div>
-            <button id="save-code-btn" class="action-btn btn-activate">Guardar Código</button>
+            <button id="save-code-btn" class="action-btn btn-activate">
+                <i class="fas fa-save"></i> Guardar Código
+            </button>
         </div>
     </div>
 
     <script>
-        // ===== DETECCIÓN DE DISPOSITIVO =====
-        const esDispositivoMovil = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-        // 🔐 Configuración de Seguridad Avanzada
+        // ===== CONFIGURACIÓN PRINCIPAL =====
         const SECURITY_CONFIG = {
             MAX_DEVICES: 3,
-            INACTIVITY_TIMEOUT: 10 * 60 * 1000, // 10 minutos
-            CODE_VALIDATION_DELAY: 800, // Retraso anti-fuerza bruta
-            SALT: "xQ9#pL2$kM5&vR1", // Sal para hashing
-            REDIRECT_URL: "https://luishparedes.github.io/massiel/", // ✅ NUEVA URL CENTRALIZADA
-            ADMIN_USER: "admin", // Cambiar en producción
-            ADMIN_PASSWORD: "admin123" // Cambiar en producción
+            INACTIVITY_TIMEOUT: 10 * 60 * 1000,
+            CODE_VALIDATION_DELAY: 1000,
+            SALT: "xQ9#pL2$kM5&vR1",
+            REDIRECT_URL: "https://luishparedes.github.io/massiel/",
+            ADMIN_USER: "admin",
+            ADMIN_PASSWORD: "admin123"
         };
 
-        // ===== PROTECCIÓN CONTRA F12 Y HERRAMIENTAS DE DESARROLLO MEJORADA (SOLO COMPUTADORA) =====
-        (function() {
-            'use strict';
-            
-            // Si es dispositivo móvil, NO activar protección F12
-            if (esDispositivoMovil) {
-                console.log('Dispositivo móvil detectado, protección F12 desactivada');
-                return;
-            }
-            
-            let devToolsOpened = false;
-            
-            // 🔥 DETECCIÓN AVANZADA DE HERRAMIENTAS DE DESARROLLO (SOLO COMPUTADORA)
-            function detectDevTools() {
-                const widthThreshold = window.outerWidth - window.innerWidth > 160;
-                const heightThreshold = window.outerHeight - window.innerHeight > 160;
-                
-                if (widthThreshold || heightThreshold) {
-                    handleSecurityBreach();
-                    return;
-                }
-                
-                // Método de tiempo de ejecución
-                const start = performance.now();
-                debugger;
-                const end = performance.now();
-                
-                if (end - start > 100) {
-                    handleSecurityBreach();
-                    return;
-                }
-                
-                // Verificar consola
-                const element = new Image();
-                Object.defineProperty(element, 'id', {
-                    get: function() {
-                        handleSecurityBreach();
-                        return '';
-                    }
-                });
-                
-                console.log(element);
-                console.clear();
-            }
-            
-            // 🚨 MANEJO DE VIOLACIÓN DE SEGURIDAD - CORREGIDO
-            function handleSecurityBreach() {
-                if (devToolsOpened) return;
-                devToolsOpened = true;
-                
-                // 🔥 BLOQUEAR COMPLETAMENTE LA PÁGINA - SIN REDIRECCIÓN
-                document.body.innerHTML = `
-                    <div style="
-                        position: fixed;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                        background: #1a1a1a;
-                        color: white;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                        z-index: 99999;
-                        font-family: Arial, sans-serif;
-                        text-align: center;
-                        padding: 20px;
-                    ">
-                        <div style="font-size: 48px; margin-bottom: 20px;">🚫</div>
-                        <h1 style="color: #ff4444; margin-bottom: 20px;">ACCESO BLOQUEADO</h1>
-                        <p style="font-size: 18px; margin-bottom: 10px;">El uso de herramientas de desarrollo no está permitido</p>
-                        <p style="font-size: 14px; color: #ccc; margin-bottom: 30px;">
-                            Esta acción ha sido registrada por motivos de seguridad
-                        </p>
-                        <div style="background: #2a2a2a; padding: 15px; border-radius: 8px; border-left: 4px solid #ff4444;">
-                            <p style="margin: 5px 0;">🔒 Sistema de Seguridad Activado</p>
-                            <p style="margin: 5px 0; font-size: 12px;">Si necesitas acceso, contacta al administrador</p>
-                        </div>
-                    </div>
-                `;
-                
-                // 📍 PREVENIR CUALQUIER INTERACCIÓN - SIN REDIRECCIÓN
-                document.addEventListener('keydown', blockAllKeys);
-                document.addEventListener('contextmenu', blockAllEvents);
-                document.addEventListener('click', blockAllEvents);
-                document.addEventListener('mousedown', blockAllEvents);
-            }
-            
-            function blockAllKeys(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-                return false;
-            }
-            
-            function blockAllEvents(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-                return false;
-            }
-            
-            // 🎯 BLOQUEO DE TECLAS DIRECTAS - CORREGIDO (SOLO COMPUTADORA)
-            document.addEventListener('keydown', function(e) {
-                // Bloquear F12
-                if (e.key === 'F12' || e.keyCode === 123) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleSecurityBreach();
-                    return false;
-                }
-                
-                // Bloquear Ctrl+Shift+I
-                if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.keyCode === 73)) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleSecurityBreach();
-                    return false;
-                }
-                
-                // Bloquear Ctrl+Shift+J
-                if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.keyCode === 74)) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleSecurityBreach();
-                    return false;
-                }
-                
-                // Bloquear Ctrl+Shift+C
-                if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.keyCode === 67)) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleSecurityBreach();
-                    return false;
-                }
-                
-                // Bloquear Ctrl+U
-                if (e.ctrlKey && (e.key === 'U' || e.keyCode === 85)) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleSecurityBreach();
-                    return false;
-                }
-                
-                // Bloquear Ctrl+Shift+K (Firefox)
-                if (e.ctrlKey && e.shiftKey && (e.key === 'K' || e.keyCode === 75)) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleSecurityBreach();
-                    return false;
-                }
-            });
-            
-            // 🖱️ BLOQUEO DE CLIC DERECHO (SOLO COMPUTADORA)
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                handleSecurityBreach();
-                return false;
-            });
-            
-            // 🔍 DETECCIÓN CONTINUA (SOLO COMPUTADORA)
-            const checkDevTools = setInterval(detectDevTools, 500);
-            
-            // 🛡️ PROTECCIÓN CONTRA SOBREESCRITURA
-            Object.defineProperty(window, 'console', {
-                value: console,
-                writable: false,
-                configurable: false
-            });
-            
-            // 📢 MENSAJE INICIAL DE SEGURIDAD
-            console.log('%c🔒 SISTEMA PROTEGIDO', 'color: red; font-size: 20px; font-weight: bold;');
-            console.log('%cEl acceso a herramientas de desarrollo está restringido', 'color: orange; font-size: 14px;');
-            
-        })();
-
-        // 🏷️ Códigos válidos (ofuscados con encoding múltiple)
+        // ===== CÓDIGOS VÁLIDOS (CORREGIDOS SIN DUPLICADOS) =====
         const VALID_CODES = (() => {
             const encoded = "Q9R1,B5T0,Z3R8,Y2Q7,X1P6,W0O5,V9N4,U8M3,T7L2,R5J0,S6K1,Q4I9,P3H8,O2G7,N1F6,M0E5,C8H5,L9D4,K8C3,J7B2,I6A1,H5Z0,G4Y9,X1C8,F3X8,B4C8,E2W7,F9K3,D1V6,C0U5,B9T4,A8S3,Z7R2,Y6Q1,X5P0,W4O9,I2N7,V3N8,U2M7,T1L6,S0K5,R9J4,P7H2,Q8I3,O6G1,V9W1,N5F0,M4E9,L3D8,K2C7,J1B6,I0A5,H9Z4,G8Y3,F7X2,E6W1,D5V0,C4U9,B3T8,Z4B7,A2S7,Z1R6,P9M4,Y0Q5,X9P4,W8O3,V7N2,U6M1,T5L0,V4W8,S4K9,R3J8,Q2I7,D2E6,P1H6,J5O9,J4B9,O0G5,N9F4,M8E3,L7D2,N0O4,K6C1,J5B0,I4A9,U2Z6,J0K4,H3Z8,I7A3,T7Y1,F1X6,Q6S0,E0W5,D9V4,C8U3,A6S1,G2Y7,Z5R0,X8Y2,Y4Q9,W207,X3P8,G9K4,S9U3,V1N6,U0M5,T9L4,S8K3,R7J2,Q6I1,P5H9,O4G9,N3F8,M2E7,L1D6,K0C5,J9B4,I8A3,H7Z2,G6Y1,F5X0,E4W9,D3V8,C2U7,B1T6,A0S5,Z9R4,Y8Q3,X7P2,K5M9,A4S9";
             return encoded.split(',');
         })();
 
-        // 🛡️ Sistema de Seguridad Mejorado
+        // ===== SISTEMA DE SEGURIDAD MEJORADO =====
         class CodeSecuritySystem {
             constructor() {
+                this.inactivityTimer = null;
+                this.loadConfigFromStorage();
                 this.initSessionProtection();
                 this.checkExistingSession();
-                this.loadConfigFromStorage();
             }
             
             loadConfigFromStorage() {
-                // Cargar configuración desde localStorage
-                const maxDevices = localStorage.getItem('maxDevices');
-                const inactivityTimeout = localStorage.getItem('inactivityTimeout');
-                const redirectUrl = localStorage.getItem('redirectUrl');
-                const adminUser = localStorage.getItem('adminUser');
-                const adminPassword = localStorage.getItem('adminPassword');
-                
-                if (maxDevices) SECURITY_CONFIG.MAX_DEVICES = parseInt(maxDevices);
-                if (inactivityTimeout) SECURITY_CONFIG.INACTIVITY_TIMEOUT = parseInt(inactivityTimeout) * 60 * 1000;
-                if (redirectUrl) SECURITY_CONFIG.REDIRECT_URL = redirectUrl;
-                if (adminUser) SECURITY_CONFIG.ADMIN_USER = adminUser;
-                if (adminPassword) SECURITY_CONFIG.ADMIN_PASSWORD = adminPassword;
+                try {
+                    const maxDevices = localStorage.getItem('maxDevices');
+                    const inactivityTimeout = localStorage.getItem('inactivityTimeout');
+                    const redirectUrl = localStorage.getItem('redirectUrl');
+                    const adminUser = localStorage.getItem('adminUser');
+                    const adminPassword = localStorage.getItem('adminPassword');
+                    
+                    if (maxDevices) SECURITY_CONFIG.MAX_DEVICES = parseInt(maxDevices);
+                    if (inactivityTimeout) SECURITY_CONFIG.INACTIVITY_TIMEOUT = parseInt(inactivityTimeout) * 60 * 1000;
+                    if (redirectUrl) SECURITY_CONFIG.REDIRECT_URL = redirectUrl;
+                    if (adminUser) SECURITY_CONFIG.ADMIN_USER = adminUser;
+                    if (adminPassword) SECURITY_CONFIG.ADMIN_PASSWORD = adminPassword;
+                } catch (error) {
+                    console.error('Error loading config:', error);
+                }
             }
 
-            // 🔄 Generar ID de dispositivo único y persistente
             generateDeviceId() {
-                const storedId = localStorage.getItem('secureDeviceId');
-                if (storedId) return storedId;
-
-                const fingerprint = [
-                    navigator.userAgent,
-                    navigator.hardwareConcurrency,
-                    screen.width,
-                    screen.height,
-                    navigator.deviceMemory,
-                    SECURITY_CONFIG.SALT
-                ].join('|');
-
-                const deviceId = this.hashString(fingerprint) + '-' + Date.now().toString(36);
-                localStorage.setItem('secureDeviceId', deviceId);
+                let deviceId = localStorage.getItem('secureDeviceId');
+                if (!deviceId) {
+                    const fingerprint = [
+                        navigator.userAgent,
+                        navigator.hardwareConcurrency || 'unknown',
+                        screen.width,
+                        screen.height,
+                        navigator.language,
+                        new Date().getTimezoneOffset()
+                    ].join('|');
+                    
+                    deviceId = this.hashString(fingerprint) + '-' + Date.now().toString(36);
+                    localStorage.setItem('secureDeviceId', deviceId);
+                }
                 return deviceId;
             }
 
-            // 🔢 Algoritmo de hashing mejorado
             hashString(str) {
-                let hash = 5381;
+                let hash = 0;
                 for (let i = 0; i < str.length; i++) {
-                    hash = (hash * 33) ^ str.charCodeAt(i);
+                    const char = str.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
                 }
-                return (hash >>> 0).toString(36);
+                return Math.abs(hash).toString(36);
             }
 
-            // 🏷️ Obtener dispositivos registrados para un código
             getRegisteredDevices(code) {
-                const encrypted = localStorage.getItem(`encDevices_${code}`);
-                if (!encrypted) return [];
-
                 try {
+                    const encrypted = localStorage.getItem(`devices_${code}`);
+                    if (!encrypted) return [];
+                    
                     const decrypted = this.decryptData(encrypted);
                     return JSON.parse(decrypted) || [];
-                } catch (e) {
-                    console.error("Error al decodificar dispositivos:", e);
+                } catch (error) {
+                    console.error('Error getting devices:', error);
                     return [];
                 }
             }
 
-            // ➕ Registrar nuevo dispositivo de forma segura
             registerDevice(code) {
-                const deviceId = this.generateDeviceId();
-                const devices = this.getRegisteredDevices(code);
+                try {
+                    const deviceId = this.generateDeviceId();
+                    const devices = this.getRegisteredDevices(code);
 
-                // Verificar si ya está registrado
-                if (devices.some(dev => dev.id === deviceId)) {
-                    return { success: true, isNew: false };
+                    if (devices.some(dev => dev.id === deviceId)) {
+                        return { success: true, isNew: false };
+                    }
+
+                    if (devices.length >= SECURITY_CONFIG.MAX_DEVICES) {
+                        return { success: false, reason: "Límite de dispositivos alcanzado" };
+                    }
+
+                    devices.push({
+                        id: deviceId,
+                        timestamp: Date.now(),
+                        ua: navigator.userAgent.substring(0, 100),
+                        lastAccess: Date.now()
+                    });
+
+                    localStorage.setItem(`devices_${code}`, this.encryptData(JSON.stringify(devices)));
+                    return { success: true, isNew: true };
+                } catch (error) {
+                    console.error('Error registering device:', error);
+                    return { success: false, reason: "Error interno del sistema" };
                 }
-
-                // Verificar límite de dispositivos
-                if (devices.length >= SECURITY_CONFIG.MAX_DEVICES) {
-                    return { success: false, reason: "Límite de dispositivos alcanzado" };
-                }
-
-                // Registrar nuevo dispositivo
-                devices.push({
-                    id: deviceId,
-                    timestamp: Date.now(),
-                    ua: navigator.userAgent.substring(0, 120),
-                    lastAccess: Date.now()
-                });
-
-                // Guardar cifrado
-                localStorage.setItem(`encDevices_${code}`, this.encryptData(JSON.stringify(devices)));
-                return { success: true, isNew: true };
             }
 
-            // 🔐 Cifrado básico de datos
             encryptData(data) {
                 return btoa(unescape(encodeURIComponent(data + SECURITY_CONFIG.SALT)));
             }
 
-            // 🔓 Descifrado de datos
             decryptData(encrypted) {
                 try {
                     const decoded = decodeURIComponent(escape(atob(encrypted)));
                     return decoded.replace(SECURITY_CONFIG.SALT, '');
-                } catch (e) {
-                    console.error("Error al descifrar:", e);
+                } catch (error) {
                     return '';
                 }
             }
 
-            // ⏳ Protección por inactividad - CORREGIDO
             initSessionProtection() {
-                // Reiniciar timer en eventos de usuario
                 const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
                 events.forEach(evt => {
                     document.addEventListener(evt, this.resetInactivityTimer.bind(this));
                 });
-
                 this.resetInactivityTimer();
             }
 
@@ -1107,91 +1110,80 @@
             }
 
             handleInactiveSession() {
-                // CORREGIDO: Limpiar sesión sin redirigir
-                const currentCode = localStorage.getItem('currentValidCode');
-                sessionStorage.removeItem('activeSessionToken');
                 localStorage.removeItem('currentValidCode');
+                sessionStorage.removeItem('activeSessionToken');
                 
-                // Mostrar mensaje de sesión expirada
-                if (currentCode && document.getElementById('message')) {
-                    document.getElementById('message').textContent = "Sesión expirada por inactividad. Ingresa tu código nuevamente.";
-                    document.getElementById('message').className = 'warning';
+                const messageEl = document.getElementById('message');
+                if (messageEl) {
+                    messageEl.textContent = "Sesión expirada por inactividad. Ingresa tu código nuevamente.";
+                    messageEl.className = 'warning';
                 }
             }
 
-            // 🔍 Verificar sesión existente - CORREGIDO
             checkExistingSession() {
                 const savedCode = localStorage.getItem('currentValidCode');
                 const sessionToken = sessionStorage.getItem('activeSessionToken');
                 
-                // CORREGIDO: No redirigir automáticamente
-                // Solo mostrar información si hay un código guardado
                 if (savedCode && sessionToken) {
-                    const devices = this.getRegisteredDevices(savedCode);
-                    const deviceId = this.generateDeviceId();
-                    
-                    if (devices.some(dev => dev.id === deviceId)) {
-                        // Solo mostrar información, no redirigir
-                        if (document.getElementById('code')) {
-                            document.getElementById('code').value = savedCode;
-                            const info = this.getDeviceRegistrationInfo(savedCode);
-                            this.updateDeviceInfoDisplay(info);
-                        }
-                    } else {
-                        // Limpiar código inválido
-                        localStorage.removeItem('currentValidCode');
-                        sessionStorage.removeItem('activeSessionToken');
+                    const codeInput = document.getElementById('code');
+                    if (codeInput) {
+                        codeInput.value = savedCode;
+                        const info = this.getDeviceRegistrationInfo(savedCode);
+                        this.updateDeviceInfoDisplay(info);
                     }
                 }
             }
 
-            // ✅ Validar código de acceso
-            validateAccessCode(code) {
+            async validateAccessCode(code) {
                 return new Promise(resolve => {
                     setTimeout(() => {
-                        if (!VALID_CODES.includes(code)) {
-                            resolve({ valid: false, error: "Código no válido" });
-                            return;
-                        }
+                        try {
+                            if (!VALID_CODES.includes(code)) {
+                                resolve({ valid: false, error: "❌ Código no válido" });
+                                return;
+                            }
 
-                        const registration = this.registerDevice(code);
-                        if (!registration.success) {
-                            resolve({ valid: false, error: registration.reason });
-                            return;
-                        }
+                            const registration = this.registerDevice(code);
+                            if (!registration.success) {
+                                resolve({ valid: false, error: `❌ ${registration.reason}` });
+                                return;
+                            }
 
-                        // Establecer sesión válida
-                        localStorage.setItem('currentValidCode', code);
-                        sessionStorage.setItem('activeSessionToken', this.hashString(Date.now().toString()));
-                        
-                        resolve({ valid: true, isNewDevice: registration.isNew });
+                            localStorage.setItem('currentValidCode', code);
+                            sessionStorage.setItem('activeSessionToken', this.hashString(Date.now().toString()));
+                            
+                            resolve({ 
+                                valid: true, 
+                                isNewDevice: registration.isNew,
+                                message: registration.isNew ? 
+                                    "✅ Dispositivo registrado correctamente" : 
+                                    "✅ Acceso concedido"
+                            });
+                        } catch (error) {
+                            resolve({ valid: false, error: "❌ Error del sistema" });
+                        }
                     }, SECURITY_CONFIG.CODE_VALIDATION_DELAY);
                 });
             }
 
-            // ℹ️ Obtener información de dispositivos registrados
             getDeviceRegistrationInfo(code) {
                 const devices = this.getRegisteredDevices(code);
                 const currentDeviceId = this.generateDeviceId();
-                
                 const isCurrentRegistered = devices.some(dev => dev.id === currentDeviceId);
-                const availableSlots = SECURITY_CONFIG.MAX_DEVICES - devices.length;
-                
+                const availableSlots = Math.max(0, SECURITY_CONFIG.MAX_DEVICES - devices.length);
+
                 return {
                     isRegistered: isCurrentRegistered,
                     registeredDevices: devices.length,
                     maxDevices: SECURITY_CONFIG.MAX_DEVICES,
-                    availableSlots: availableSlots > 0 ? availableSlots : 0
+                    availableSlots: availableSlots
                 };
             }
 
-            // Actualizar información de dispositivo en la UI
             updateDeviceInfoDisplay(info) {
                 const deviceInfoEl = document.getElementById('device-info');
-                if (!deviceInfoEl) return;
-                
-                if (!info || info.registeredDevices === 0) {
-                    deviceInfoEl.textContent = '';
+                if (!deviceInfoEl || !info || info.registeredDevices === 0) {
+                    if (deviceInfoEl) deviceInfoEl.textContent = '';
                     return;
                 }
 
@@ -1210,13 +1202,15 @@
                 }
             }
 
-            // 👨‍💼 Métodos para el panel de administración
+            // === MÉTODOS DE ADMINISTRACIÓN ===
             getAllCodes() {
                 const codes = [];
+                
+                // Agregar códigos con dispositivos registrados
                 for (let i = 0; i < localStorage.length; i++) {
                     const key = localStorage.key(i);
-                    if (key.startsWith('encDevices_')) {
-                        const code = key.replace('encDevices_', '');
+                    if (key.startsWith('devices_')) {
+                        const code = key.replace('devices_', '');
                         const devices = this.getRegisteredDevices(code);
                         const clientInfo = this.getClientInfo(code);
                         
@@ -1231,7 +1225,7 @@
                     }
                 }
                 
-                // Agregar códigos válidos que no tienen dispositivos registrados
+                // Agregar códigos válidos sin dispositivos
                 VALID_CODES.forEach(code => {
                     if (!codes.some(c => c.code === code)) {
                         const clientInfo = this.getClientInfo(code);
@@ -1250,13 +1244,10 @@
             }
             
             getClientInfo(code) {
-                const infoStr = localStorage.getItem(`client_${code}`);
-                if (!infoStr) return { name: '', phone: '', email: '', notes: '' };
-                
                 try {
-                    return JSON.parse(infoStr);
-                } catch (e) {
-                    console.error("Error parsing client info:", e);
+                    const infoStr = localStorage.getItem(`client_${code}`);
+                    return infoStr ? JSON.parse(infoStr) : { name: '', phone: '', email: '', notes: '' };
+                } catch {
                     return { name: '', phone: '', email: '', notes: '' };
                 }
             }
@@ -1267,43 +1258,47 @@
             
             getCodeCreationDate(code) {
                 const dateStr = localStorage.getItem(`created_${code}`);
-                return dateStr ? new Date(dateStr) : new Date(2023, 0, 1); // Fecha por defecto
+                return dateStr ? new Date(dateStr) : new Date();
             }
             
             getLastAccessDate(devices) {
                 if (!devices || devices.length === 0) return null;
-                return new Date(Math.max(...devices.map(d => d.lastAccess || d.timestamp)));
+                const timestamps = devices.map(d => d.lastAccess || d.timestamp);
+                return new Date(Math.max(...timestamps));
             }
             
             setCodeStatus(code, active) {
-                if (active && !VALID_CODES.includes(code)) {
-                    VALID_CODES.push(code);
-                    localStorage.setItem(`created_${code}`, new Date().toISOString());
-                } else if (!active) {
-                    const index = VALID_CODES.indexOf(code);
-                    if (index > -1) {
-                        VALID_CODES.splice(index, 1);
+                try {
+                    if (active && !VALID_CODES.includes(code)) {
+                        VALID_CODES.push(code);
+                        localStorage.setItem(`created_${code}`, new Date().toISOString());
+                    } else if (!active) {
+                        const index = VALID_CODES.indexOf(code);
+                        if (index > -1) VALID_CODES.splice(index, 1);
                     }
+                    
+                    localStorage.setItem('validCodes', JSON.stringify(VALID_CODES));
+                    return true;
+                } catch {
+                    return false;
                 }
-                
-                // Actualizar almacenamiento local con los códigos actualizados
-                localStorage.setItem('validCodes', JSON.stringify(VALID_CODES));
-                return true;
             }
             
             removeDevice(code, deviceId) {
-                const devices = this.getRegisteredDevices(code);
-                const filteredDevices = devices.filter(dev => dev.id !== deviceId);
-                
-                localStorage.setItem(`encDevices_${code}`, this.encryptData(JSON.stringify(filteredDevices)));
-                return true;
+                try {
+                    const devices = this.getRegisteredDevices(code);
+                    const filteredDevices = devices.filter(dev => dev.id !== deviceId);
+                    localStorage.setItem(`devices_${code}`, this.encryptData(JSON.stringify(filteredDevices)));
+                    return true;
+                } catch {
+                    return false;
+                }
             }
             
-           generateNewCode() {
+            generateNewCode() {
                 const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
                 let newCode = '';
                 let attempts = 0;
-                const maxAttempts = 50; // Límite de intentos para evitar bucles infinitos
                 
                 do {
                     newCode = '';
@@ -1312,15 +1307,12 @@
                     }
                     attempts++;
                     
-                    // Si excede los intentos, agregar timestamp para hacerlo único
-                    if (attempts >= maxAttempts) {
-                        const timestamp = Date.now().toString();
-                        newCode = newCode.substring(0, 3) + timestamp.charAt(timestamp.length - 1);
+                    if (attempts >= 50) {
+                        newCode = 'A' + Date.now().toString(36).slice(-3).toUpperCase();
                         break;
                     }
                 } while (VALID_CODES.includes(newCode));
                 
-                // Agregar el nuevo código
                 VALID_CODES.push(newCode);
                 localStorage.setItem('validCodes', JSON.stringify(VALID_CODES));
                 localStorage.setItem(`created_${newCode}`, new Date().toISOString());
@@ -1351,42 +1343,44 @@
             getDevicesByCode(code) {
                 if (!code) return this.getAllDevices();
                 const codeData = this.getAllCodes().find(c => c.code === code);
-                const clientName = codeData ? codeData.name : '';
-                
                 return this.getRegisteredDevices(code).map(device => ({
                     ...device,
                     code: code,
-                    clientName: clientName
+                    clientName: codeData ? codeData.name : ''
                 }));
             }
             
             updateSettings(newSettings) {
-                if (newSettings.maxDevices) {
-                    SECURITY_CONFIG.MAX_DEVICES = newSettings.maxDevices;
-                    localStorage.setItem('maxDevices', newSettings.maxDevices);
+                try {
+                    if (newSettings.maxDevices) {
+                        SECURITY_CONFIG.MAX_DEVICES = newSettings.maxDevices;
+                        localStorage.setItem('maxDevices', newSettings.maxDevices);
+                    }
+                    
+                    if (newSettings.inactivityTimeout) {
+                        SECURITY_CONFIG.INACTIVITY_TIMEOUT = newSettings.inactivityTimeout * 60 * 1000;
+                        localStorage.setItem('inactivityTimeout', newSettings.inactivityTimeout);
+                    }
+                    
+                    if (newSettings.redirectUrl) {
+                        SECURITY_CONFIG.REDIRECT_URL = newSettings.redirectUrl;
+                        localStorage.setItem('redirectUrl', newSettings.redirectUrl);
+                    }
+                    
+                    if (newSettings.adminUser) {
+                        SECURITY_CONFIG.ADMIN_USER = newSettings.adminUser;
+                        localStorage.setItem('adminUser', newSettings.adminUser);
+                    }
+                    
+                    if (newSettings.adminPassword) {
+                        SECURITY_CONFIG.ADMIN_PASSWORD = newSettings.adminPassword;
+                        localStorage.setItem('adminPassword', newSettings.adminPassword);
+                    }
+                    
+                    return true;
+                } catch {
+                    return false;
                 }
-                
-                if (newSettings.inactivityTimeout) {
-                    SECURITY_CONFIG.INACTIVITY_TIMEOUT = newSettings.inactivityTimeout * 60 * 1000;
-                    localStorage.setItem('inactivityTimeout', newSettings.inactivityTimeout);
-                }
-                
-                if (newSettings.redirectUrl) {
-                    SECURITY_CONFIG.REDIRECT_URL = newSettings.redirectUrl;
-                    localStorage.setItem('redirectUrl', newSettings.redirectUrl);
-                }
-                
-                if (newSettings.adminUser) {
-                    SECURITY_CONFIG.ADMIN_USER = newSettings.adminUser;
-                    localStorage.setItem('adminUser', newSettings.adminUser);
-                }
-                
-                if (newSettings.adminPassword) {
-                    SECURITY_CONFIG.ADMIN_PASSWORD = newSettings.adminPassword;
-                    localStorage.setItem('adminPassword', newSettings.adminPassword);
-                }
-                
-                return true;
             }
             
             exportData() {
@@ -1402,143 +1396,77 @@
                     clients: {}
                 };
                 
-                // Recopilar todos los datos de dispositivos y clientes
                 for (let i = 0; i < localStorage.length; i++) {
                     const key = localStorage.key(i);
-                    if (key.startsWith('encDevices_')) {
-                        const code = key.replace('encDevices_', '');
-                        try {
-                            const devices = this.getRegisteredDevices(code);
-                            data.devices[code] = devices;
-                        } catch (e) {
-                            console.error("Error exporting devices for code", code, e);
-                        }
+                    if (key.startsWith('devices_')) {
+                        const code = key.replace('devices_', '');
+                        data.devices[code] = this.getRegisteredDevices(code);
                     } else if (key.startsWith('client_')) {
                         const code = key.replace('client_', '');
-                        try {
-                            const clientInfo = this.getClientInfo(code);
-                            data.clients[code] = clientInfo;
-                        } catch (e) {
-                            console.error("Error exporting client info for code", code, e);
-                        }
-                    } else if (key.startsWith('created_')) {
-                        const code = key.replace('created_', '');
-                        const dateStr = localStorage.getItem(key);
-                        if (!data.clients[code]) {
-                            data.clients[code] = {};
-                        }
-                        data.clients[code].created = dateStr;
+                        data.clients[code] = this.getClientInfo(code);
                     }
                 }
                 
-                return JSON.stringify(data);
+                return JSON.stringify(data, null, 2);
             }
             
             importData(jsonData) {
                 try {
                     const data = JSON.parse(jsonData);
                     
-                    // Restaurar códigos válidos
-                    if (data.validCodes && Array.isArray(data.validCodes)) {
+                    if (data.validCodes) {
                         VALID_CODES.length = 0;
                         data.validCodes.forEach(code => VALID_CODES.push(code));
                         localStorage.setItem('validCodes', JSON.stringify(VALID_CODES));
                     }
                     
-                    // Restaurar configuraciones
                     if (data.settings) {
-                        if (data.settings.maxDevices) {
-                            SECURITY_CONFIG.MAX_DEVICES = data.settings.maxDevices;
-                            localStorage.setItem('maxDevices', data.settings.maxDevices);
-                        }
-                        
-                        if (data.settings.inactivityTimeout) {
-                            SECURITY_CONFIG.INACTIVITY_TIMEOUT = data.settings.inactivityTimeout * 60 * 1000;
-                            localStorage.setItem('inactivityTimeout', data.settings.inactivityTimeout);
-                        }
-                        
-                        if (data.settings.redirectUrl) {
-                            SECURITY_CONFIG.REDIRECT_URL = data.settings.redirectUrl;
-                            localStorage.setItem('redirectUrl', data.settings.redirectUrl);
-                        }
-                        
-                        if (data.settings.adminUser) {
-                            SECURITY_CONFIG.ADMIN_USER = data.settings.adminUser;
-                            localStorage.setItem('adminUser', data.settings.adminUser);
-                        }
-                        
-                        if (data.settings.adminPassword) {
-                            SECURITY_CONFIG.ADMIN_PASSWORD = data.settings.adminPassword;
-                            localStorage.setItem('adminPassword', data.settings.adminPassword);
-                        }
+                        this.updateSettings(data.settings);
                     }
                     
-                    // Restaurar dispositivos
-                    if (data.devices && typeof data.devices === 'object') {
-                        for (const code in data.devices) {
-                            if (Array.isArray(data.devices[code])) {
-                                localStorage.setItem(`encDevices_${code}`, this.encryptData(JSON.stringify(data.devices[code])));
-                            }
-                        }
+                    if (data.devices) {
+                        Object.keys(data.devices).forEach(code => {
+                            localStorage.setItem(`devices_${code}`, this.encryptData(JSON.stringify(data.devices[code])));
+                        });
                     }
                     
-                    // Restaurar información de clientes
-                    if (data.clients && typeof data.clients === 'object') {
-                        for (const code in data.clients) {
-                            if (typeof data.clients[code] === 'object') {
-                                const clientInfo = data.clients[code];
-                                if (clientInfo.created) {
-                                    localStorage.setItem(`created_${code}`, clientInfo.created);
-                                    delete clientInfo.created;
-                                }
-                                localStorage.setItem(`client_${code}`, JSON.stringify(clientInfo));
-                            }
-                        }
+                    if (data.clients) {
+                        Object.keys(data.clients).forEach(code => {
+                            localStorage.setItem(`client_${code}`, JSON.stringify(data.clients[code]));
+                        });
                     }
                     
                     return true;
-                } catch (e) {
-                    console.error("Error importing data:", e);
+                } catch {
                     return false;
                 }
             }
             
             resetData() {
-                if (confirm('¿ESTÁ SEGURO? Esta acción eliminará todos los datos excepto los códigos originales. No se puede deshacer.')) {
-                    // Eliminar todos los datos excepto los códigos válidos originales
-                    const keysToKeep = ['validCodes', 'adminUser', 'adminPassword', 'maxDevices', 'inactivityTimeout', 'redirectUrl'];
-                    const keysToRemove = [];
-                    
-                    for (let i = 0; i < localStorage.length; i++) {
-                        const key = localStorage.key(i);
-                        if (!keysToKeep.includes(key) && 
-                            !key.startsWith('client_') && 
-                            !key.startsWith('encDevices_') && 
-                            !key.startsWith('created_')) {
-                            keysToRemove.push(key);
-                        }
-                    }
-                    
-                    // Eliminar dispositivos e información de clientes
-                    for (let i = 0; i < localStorage.length; i++) {
-                        const key = localStorage.key(i);
-                        if (key.startsWith('encDevices_') || key.startsWith('client_') || key.startsWith('created_')) {
-                            localStorage.removeItem(key);
-                        }
-                    }
-                    
-                    // Restablecer configuración por defecto
-                    localStorage.setItem('maxDevices', '3');
-                    localStorage.setItem('inactivityTimeout', '10');
-                    
-                    this.loadConfigFromStorage();
-                    return true;
+                if (!confirm('¿ESTÁ SEGURO? Esta acción eliminará todos los datos excepto los códigos originales.')) {
+                    return false;
                 }
-                return false;
+                
+                const keysToRemove = [];
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key.startsWith('devices_') || key.startsWith('client_') || key.startsWith('created_')) {
+                        keysToRemove.push(key);
+                    }
+                }
+                
+                keysToRemove.forEach(key => localStorage.removeItem(key));
+                
+                SECURITY_CONFIG.MAX_DEVICES = 3;
+                SECURITY_CONFIG.INACTIVITY_TIMEOUT = 10 * 60 * 1000;
+                localStorage.setItem('maxDevices', '3');
+                localStorage.setItem('inactivityTimeout', '10');
+                
+                return true;
             }
         }
 
-        // 👨‍💼 Sistema de Administración
+        // ===== SISTEMA DE ADMINISTRACIÓN =====
         class AdminSystem {
             constructor(securitySystem) {
                 this.securitySystem = securitySystem;
@@ -1548,116 +1476,90 @@
             }
             
             loadSettings() {
-                // Cargar configuraciones guardadas
                 const maxDevices = localStorage.getItem('maxDevices');
                 const inactivityTimeout = localStorage.getItem('inactivityTimeout');
                 const redirectUrl = localStorage.getItem('redirectUrl');
                 const adminUser = localStorage.getItem('adminUser');
                 
-                if (maxDevices) {
-                    document.getElementById('max-devices').value = maxDevices;
-                }
-                
-                if (inactivityTimeout) {
-                    document.getElementById('inactivity-timeout').value = inactivityTimeout;
-                }
-                
-                if (redirectUrl) {
-                    document.getElementById('redirect-url').value = redirectUrl;
-                }
-                
-                if (adminUser) {
-                    document.getElementById('admin-username').value = adminUser;
-                }
+                if (maxDevices) document.getElementById('max-devices').value = maxDevices;
+                if (inactivityTimeout) document.getElementById('inactivity-timeout').value = inactivityTimeout;
+                if (redirectUrl) document.getElementById('redirect-url').value = redirectUrl;
+                if (adminUser) document.getElementById('admin-username').value = adminUser;
             }
             
             initAdminEvents() {
-                // Enlace flotante para acceder al login de administración
+                // Eventos principales
                 document.getElementById('admin-access').addEventListener('click', (e) => {
                     e.preventDefault();
                     document.getElementById('client-container').style.display = 'none';
                     document.getElementById('admin-login').style.display = 'block';
                 });
                 
-                // Login de administrador
                 document.getElementById('admin-login-form').addEventListener('submit', (e) => {
                     e.preventDefault();
                     this.handleAdminLogin();
                 });
                 
-                // Cerrar sesión
                 document.getElementById('logout-btn').addEventListener('click', () => {
                     this.handleAdminLogout();
                 });
                 
-                // Navegación por pestañas
+                // Navegación
                 document.querySelectorAll('.nav-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        const tab = e.target.getAttribute('data-tab');
+                        const tab = e.target.closest('.nav-btn').getAttribute('data-tab');
                         this.switchTab(tab);
                     });
                 });
                 
-                // Generar nuevo código
+                // Códigos
                 document.getElementById('generate-code-btn').addEventListener('click', () => {
                     this.showCodeEditModal();
                 });
                 
-                // Seleccionar código para ver dispositivos
                 document.getElementById('code-selector').addEventListener('change', (e) => {
                     this.loadDevices(e.target.value);
                 });
                 
-                // Buscar código
                 document.getElementById('search-btn').addEventListener('click', () => {
                     this.searchCodes();
                 });
                 
-                // Limpiar búsqueda
                 document.getElementById('clear-search').addEventListener('click', () => {
                     document.getElementById('code-search').value = '';
                     this.loadCodes();
                 });
                 
                 // Filtros
-                document.getElementById('filter-status').addEventListener('change', () => {
-                    this.applyFilters();
+                ['filter-status', 'filter-devices', 'filter-sort'].forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => {
+                        this.applyFilters();
+                    });
                 });
                 
-                document.getElementById('filter-devices').addEventListener('change', () => {
-                    this.applyFilters();
-                });
-                
-                document.getElementById('filter-sort').addEventListener('change', () => {
-                    this.applyFilters();
-                });
-                
-                // Guardar configuraciones
+                // Configuración
                 document.getElementById('save-settings').addEventListener('click', () => {
                     this.saveSettings();
                 });
                 
-                // Guardar credenciales de administrador
                 document.getElementById('save-admin').addEventListener('click', () => {
                     this.saveAdminCredentials();
                 });
                 
-                // Exportar datos
+                // Datos
                 document.getElementById('export-data').addEventListener('click', () => {
                     this.exportData();
                 });
                 
-                // Importar datos
                 document.getElementById('import-data').addEventListener('click', () => {
                     this.importData();
                 });
                 
-                // Restablecer datos
                 document.getElementById('reset-data').addEventListener('click', () => {
                     this.resetData();
                 });
                 
-                // Guardar código
+                // Modal código
                 document.getElementById('save-code-btn').addEventListener('click', () => {
                     this.saveCode();
                 });
@@ -1671,12 +1573,9 @@
                     });
                 });
                 
-                // Cerrar modal al hacer clic fuera
                 document.querySelectorAll('.modal').forEach(modal => {
                     modal.addEventListener('click', (e) => {
-                        if (e.target === modal) {
-                            modal.style.display = 'none';
-                        }
+                        if (e.target === modal) modal.style.display = 'none';
                     });
                 });
             }
@@ -1684,49 +1583,42 @@
             handleAdminLogin() {
                 const username = document.getElementById('admin-user').value;
                 const password = document.getElementById('admin-password').value;
+                const messageEl = document.getElementById('admin-message');
                 
                 if (username === SECURITY_CONFIG.ADMIN_USER && password === SECURITY_CONFIG.ADMIN_PASSWORD) {
                     document.getElementById('admin-login').style.display = 'none';
                     document.getElementById('admin-panel').style.display = 'block';
                     this.loadAdminData();
+                    messageEl.textContent = '';
+                    messageEl.className = '';
                 } else {
-                    document.getElementById('admin-message').textContent = 'Credenciales incorrectas';
+                    messageEl.textContent = '❌ Credenciales incorrectas';
+                    messageEl.className = 'error';
                 }
             }
             
             handleAdminLogout() {
                 document.getElementById('admin-panel').style.display = 'none';
-                document.getElementById('client-container').style.display = 'block';
+                document.getElementById('client-container').style.display = 'flex';
                 document.getElementById('admin-user').value = '';
                 document.getElementById('admin-password').value = '';
                 document.getElementById('admin-message').textContent = '';
             }
             
             switchTab(tabName) {
-                // Desactivar todas las pestañas
-                document.querySelectorAll('.tab-content').forEach(tab => {
-                    tab.classList.remove('active');
-                });
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
                 
-                document.querySelectorAll('.nav-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                
-                // Activar la pestaña seleccionada
                 document.getElementById(tabName).classList.add('active');
                 document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
                 
-                // Recargar datos si es necesario
-                if (tabName === 'codes') {
-                    this.loadCodes();
-                } else if (tabName === 'devices') {
+                if (tabName === 'codes') this.loadCodes();
+                else if (tabName === 'devices') {
                     this.loadCodeSelector();
                     this.loadDevices();
-                } else if (tabName === 'dashboard') {
-                    this.loadDashboard();
-                } else if (tabName === 'settings') {
-                    this.loadSettings();
                 }
+                else if (tabName === 'dashboard') this.loadDashboard();
+                else if (tabName === 'settings') this.loadSettings();
             }
             
             loadAdminData() {
@@ -1739,26 +1631,25 @@
                 const activeCodes = codes.filter(code => code.active).length;
                 const inactiveCodes = codes.filter(code => !code.active).length;
                 const totalDevices = codes.reduce((sum, code) => sum + code.devices, 0);
-                const usagePercentage = Math.round((totalDevices / (codes.length * SECURITY_CONFIG.MAX_DEVICES)) * 100);
+                const usagePercentage = codes.length > 0 ? 
+                    Math.round((totalDevices / (codes.length * SECURITY_CONFIG.MAX_DEVICES)) * 100) : 0;
                 
-                // Actualizar estadísticas
                 document.getElementById('stat-active').textContent = activeCodes;
                 document.getElementById('stat-inactive').textContent = inactiveCodes;
                 document.getElementById('stat-devices').textContent = totalDevices;
                 document.getElementById('stat-usage').textContent = `${usagePercentage}%`;
                 
-                // Cargar códigos recientes (últimos 5)
-                const recentCodes = codes
-                    .sort((a, b) => b.created - a.created)
-                    .slice(0, 5);
+                const recentCodes = codes.sort((a, b) => b.created - a.created).slice(0, 5);
+                const container = document.getElementById('recent-codes');
+                container.innerHTML = '';
                 
-                const recentCodesContainer = document.getElementById('recent-codes');
-                recentCodesContainer.innerHTML = '';
-                
-                recentCodes.forEach(codeData => {
-                    const codeElement = this.createCodeElement(codeData);
-                    recentCodesContainer.appendChild(codeElement);
-                });
+                if (recentCodes.length === 0) {
+                    container.innerHTML = '<div class="info" style="text-align: center; padding: 2rem;"><i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 1rem;"></i><p>No hay códigos registrados aún</p></div>';
+                } else {
+                    recentCodes.forEach(codeData => {
+                        container.appendChild(this.createCodeElement(codeData));
+                    });
+                }
             }
             
             loadCodes() {
@@ -1774,21 +1665,12 @@
                 
                 let filteredCodes = this.securitySystem.getAllCodes();
                 
-                // Aplicar filtro de estado
-                if (statusFilter === 'active') {
-                    filteredCodes = filteredCodes.filter(code => code.active);
-                } else if (statusFilter === 'inactive') {
-                    filteredCodes = filteredCodes.filter(code => !code.active);
-                }
+                if (statusFilter === 'active') filteredCodes = filteredCodes.filter(code => code.active);
+                else if (statusFilter === 'inactive') filteredCodes = filteredCodes.filter(code => !code.active);
                 
-                // Aplicar filtro de dispositivos
-                if (devicesFilter === 'full') {
-                    filteredCodes = filteredCodes.filter(code => code.devices >= SECURITY_CONFIG.MAX_DEVICES);
-                } else if (devicesFilter === 'available') {
-                    filteredCodes = filteredCodes.filter(code => code.devices < SECURITY_CONFIG.MAX_DEVICES);
-                }
+                if (devicesFilter === 'full') filteredCodes = filteredCodes.filter(code => code.devices >= SECURITY_CONFIG.MAX_DEVICES);
+                else if (devicesFilter === 'available') filteredCodes = filteredCodes.filter(code => code.devices < SECURITY_CONFIG.MAX_DEVICES);
                 
-                // Aplicar búsqueda
                 if (searchTerm) {
                     filteredCodes = filteredCodes.filter(code => 
                         code.code.toLowerCase().includes(searchTerm) ||
@@ -1798,48 +1680,38 @@
                     );
                 }
                 
-                // Aplicar ordenamiento
                 switch (sortBy) {
-                    case 'recent':
-                        filteredCodes.sort((a, b) => b.created - a.created);
-                        break;
-                    case 'oldest':
-                        filteredCodes.sort((a, b) => a.created - b.created);
-                        break;
-                    case 'name':
-                        filteredCodes.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-                        break;
-                    case 'code':
-                        filteredCodes.sort((a, b) => a.code.localeCompare(b.code));
-                        break;
+                    case 'recent': filteredCodes.sort((a, b) => b.created - a.created); break;
+                    case 'oldest': filteredCodes.sort((a, b) => a.created - b.created); break;
+                    case 'name': filteredCodes.sort((a, b) => (a.name || '').localeCompare(b.name || '')); break;
+                    case 'code': filteredCodes.sort((a, b) => a.code.localeCompare(b.code)); break;
                 }
                 
                 this.displayCodes(filteredCodes);
             }
             
             displayCodes(codes) {
-                const codesContainer = document.getElementById('all-codes');
-                codesContainer.innerHTML = '';
+                const container = document.getElementById('all-codes');
+                container.innerHTML = '';
                 
                 if (codes.length === 0) {
-                    codesContainer.innerHTML = '<p>No se encontraron códigos</p>';
+                    container.innerHTML = '<div class="info" style="text-align: center; padding: 2rem;"><i class="fas fa-key" style="font-size: 2rem; margin-bottom: 1rem;"></i><p>No se encontraron códigos</p></div>';
                     return;
                 }
                 
                 codes.forEach(codeData => {
-                    const codeElement = this.createCodeElement(codeData);
-                    codesContainer.appendChild(codeElement);
+                    container.appendChild(this.createCodeElement(codeData));
                 });
             }
             
             createCodeElement(codeData) {
-                const codeElement = document.createElement('div');
-                codeElement.className = `code-item ${codeData.active ? '' : 'inactive'}`;
+                const element = document.createElement('div');
+                element.className = `code-item ${codeData.active ? '' : 'inactive'}`;
                 
-                const createdDate = new Date(codeData.created).toLocaleDateString();
-                const lastAccess = codeData.lastAccess ? new Date(codeData.lastAccess).toLocaleDateString() : 'Nunca';
+                const createdDate = codeData.created.toLocaleDateString();
+                const lastAccess = codeData.lastAccess ? codeData.lastAccess.toLocaleDateString() : 'Nunca';
                 
-                codeElement.innerHTML = `
+                element.innerHTML = `
                     <div class="code-info">
                         <div class="code-header">
                             <div class="code-value">${codeData.code}</div>
@@ -1874,63 +1746,58 @@
                     </div>
                 `;
                 
-                // Agregar event listeners a los botones
-                const infoBtn = codeElement.querySelector('.btn-info');
-                infoBtn.addEventListener('click', () => {
+                // Event listeners
+                element.querySelector('.btn-info').addEventListener('click', () => {
                     this.showCodeDetails(codeData.code);
                 });
                 
-                const editBtn = codeElement.querySelector('.btn-edit');
-                editBtn.addEventListener('click', () => {
+                element.querySelector('.btn-edit').addEventListener('click', () => {
                     this.showCodeEditModal(codeData.code);
                 });
                 
-                const toggleBtn = codeElement.querySelector(codeData.active ? '.btn-deactivate' : '.btn-activate');
-                toggleBtn.addEventListener('click', () => {
+                element.querySelector(codeData.active ? '.btn-deactivate' : '.btn-activate').addEventListener('click', () => {
                     this.toggleCodeStatus(codeData.code, !codeData.active);
                 });
                 
-                return codeElement;
+                return element;
             }
             
             loadCodeSelector() {
-                const codes = this.securitySystem.getAllCodes();
                 const selector = document.getElementById('code-selector');
-                selector.innerHTML = '<option value="">Todos los dispositivos</option>';
+                const codes = this.securitySystem.getAllCodes().filter(code => code.active && code.devices > 0);
                 
+                selector.innerHTML = '<option value="">Todos los dispositivos</option>';
                 codes.forEach(codeData => {
-                    if (codeData.active && codeData.devices > 0) {
-                        const option = document.createElement('option');
-                        option.value = codeData.code;
-                        option.textContent = `${codeData.code} - ${codeData.name || 'Sin nombre'} (${codeData.devices} dispositivos)`;
-                        selector.appendChild(option);
-                    }
+                    const option = document.createElement('option');
+                    option.value = codeData.code;
+                    option.textContent = `${codeData.code} - ${codeData.name || 'Sin nombre'} (${codeData.devices} dispositivos)`;
+                    selector.appendChild(option);
                 });
             }
             
             loadDevices(codeFilter = '') {
                 const devices = this.securitySystem.getDevicesByCode(codeFilter);
-                const devicesContainer = document.getElementById('devices-list');
-                devicesContainer.innerHTML = '';
+                const container = document.getElementById('devices-list');
+                container.innerHTML = '';
                 
                 if (devices.length === 0) {
-                    devicesContainer.innerHTML = '<p>No se encontraron dispositivos</p>';
+                    container.innerHTML = '<div class="info" style="text-align: center; padding: 2rem;"><i class="fas fa-laptop" style="font-size: 2rem; margin-bottom: 1rem;"></i><p>No hay dispositivos registrados</p></div>';
                     return;
                 }
                 
                 devices.forEach(device => {
-                    const deviceElement = document.createElement('div');
-                    deviceElement.className = 'device-item';
+                    const element = document.createElement('div');
+                    element.className = 'device-item';
                     
                     const registerDate = new Date(device.timestamp).toLocaleDateString();
                     const lastAccess = device.lastAccess ? new Date(device.lastAccess).toLocaleDateString() : registerDate;
                     
-                    deviceElement.innerHTML = `
+                    element.innerHTML = `
                         <div class="device-info">
                             <div class="device-id">Código: ${device.code} ${device.clientName ? `- ${device.clientName}` : ''}</div>
-                            <div class="device-id">ID: ${device.id}</div>
+                            <div class="device-id">ID: ${device.id.substring(0, 12)}...</div>
                             <div class="device-meta">
-                                Navegador: ${device.ua}
+                                Navegador: ${device.ua.substring(0, 50)}...
                             </div>
                             <div class="device-meta">
                                 Registrado: ${registerDate} • Último acceso: ${lastAccess}
@@ -1943,34 +1810,31 @@
                         </div>
                     `;
                     
-                    // Agregar event listener al botón
-                    const btn = deviceElement.querySelector('.action-btn');
-                    btn.addEventListener('click', () => {
+                    element.querySelector('.action-btn').addEventListener('click', () => {
                         this.removeDevice(device.code, device.id);
                     });
                     
-                    devicesContainer.appendChild(deviceElement);
+                    container.appendChild(element);
                 });
             }
             
             showCodeDetails(code) {
                 const codes = this.securitySystem.getAllCodes();
                 const codeData = codes.find(c => c.code === code);
-                
                 if (!codeData) return;
                 
-                const createdDate = new Date(codeData.created).toLocaleDateString();
-                const lastAccess = codeData.lastAccess ? new Date(codeData.lastAccess).toLocaleDateString() : 'Nunca';
+                const createdDate = codeData.created.toLocaleDateString();
+                const lastAccess = codeData.lastAccess ? codeData.lastAccess.toLocaleDateString() : 'Nunca';
                 const devices = this.securitySystem.getRegisteredDevices(code);
                 
                 let devicesHTML = '';
                 if (devices.length > 0) {
                     devices.forEach(device => {
                         const deviceDate = new Date(device.timestamp).toLocaleDateString();
-                        const lastAccess = device.lastAccess ? new Date(device.lastAccess).toLocaleDateString() : deviceDate;
+                        const lastDeviceAccess = device.lastAccess ? new Date(device.lastAccess).toLocaleDateString() : deviceDate;
                         devicesHTML += `
                             <div class="detail-row">
-                                <div class="detail-label">Dispositivo:</div>
+                                <div class="detail-label">Dispositivo ID:</div>
                                 <div class="detail-value">${device.id}</div>
                             </div>
                             <div class="detail-row">
@@ -1983,13 +1847,13 @@
                             </div>
                             <div class="detail-row">
                                 <div class="detail-label">Último acceso:</div>
-                                <div class="detail-value">${lastAccess}</div>
+                                <div class="detail-value">${lastDeviceAccess}</div>
                             </div>
                             <hr>
                         `;
                     });
                 } else {
-                    devicesHTML = '<p>No hay dispositivos registrados</p>';
+                    devicesHTML = '<p class="info">No hay dispositivos registrados</p>';
                 }
                 
                 document.getElementById('code-detail-content').innerHTML = `
@@ -2065,7 +1929,6 @@
                 const title = document.getElementById('code-edit-title');
                 
                 if (code) {
-                    // Editar código existente
                     title.textContent = 'Editar Código';
                     const codes = this.securitySystem.getAllCodes();
                     const codeData = codes.find(c => c.code === code);
@@ -2080,7 +1943,6 @@
                         document.getElementById('edit-status').value = codeData.active ? 'active' : 'inactive';
                     }
                 } else {
-                    // Nuevo código
                     title.textContent = 'Nuevo Código';
                     document.getElementById('edit-code').value = '';
                     document.getElementById('edit-code').disabled = false;
@@ -2103,32 +1965,22 @@
                 const status = document.getElementById('edit-status').value;
                 
                 if (!code || !/^[A-Z0-9]{4}$/.test(code)) {
-                    alert('El código debe tener 4 caracteres alfanuméricos');
+                    alert('❌ El código debe tener 4 caracteres alfanuméricos');
                     return;
                 }
                 
-                // Guardar información del cliente
-                this.securitySystem.saveClientInfo(code, {
-                    name: name,
-                    phone: phone,
-                    email: email,
-                    notes: notes
-                });
-                
-                // Actualizar estado del código
+                this.securitySystem.saveClientInfo(code, { name, phone, email, notes });
                 this.securitySystem.setCodeStatus(code, status === 'active');
                 
-                // Si es un código nuevo, agregarlo a la lista
                 if (!this.currentCode && !VALID_CODES.includes(code)) {
                     VALID_CODES.push(code);
                     localStorage.setItem('validCodes', JSON.stringify(VALID_CODES));
                     localStorage.setItem(`created_${code}`, new Date().toISOString());
                 }
                 
-                alert('Código guardado correctamente');
+                alert('✅ Código guardado correctamente');
                 document.getElementById('code-edit-modal').style.display = 'none';
                 
-                // Recargar datos
                 this.loadCodes();
                 this.loadCodeSelector();
                 this.loadDashboard();
@@ -2145,10 +1997,9 @@
                     this.loadDashboard();
                     this.loadCodes();
                     this.loadCodeSelector();
-                    
-                    alert(`Código ${code} ${activate ? 'activado' : 'desactivado'} correctamente`);
+                    alert(`✅ Código ${code} ${activate ? 'activado' : 'desactivado'} correctamente`);
                 } else {
-                    alert('Error al cambiar el estado del código');
+                    alert('❌ Error al cambiar el estado del código');
                 }
             }
             
@@ -2161,21 +2012,17 @@
                         this.loadDashboard();
                         this.loadCodes();
                         this.loadCodeSelector();
-                        
-                        alert('Dispositivo eliminado correctamente');
+                        alert('✅ Dispositivo eliminado correctamente');
                     } else {
-                        alert('Error al eliminar el dispositivo');
+                        alert('❌ Error al eliminar el dispositivo');
                     }
                 }
             }
             
-           generateNewCode() {
+            generateNewCode() {
                 const newCode = this.securitySystem.generateNewCode();
-                
-                // Abrir modal de edición con el nuevo código generado
                 this.showCodeEditModal(newCode);
                 
-                // Mostrar mensaje de confirmación
                 setTimeout(() => {
                     alert(`¡Nuevo código generado: ${newCode}! Complete la información del cliente.`);
                 }, 300);
@@ -2187,17 +2034,17 @@
                 const redirectUrl = document.getElementById('redirect-url').value;
                 
                 if (!maxDevices || maxDevices < 1 || maxDevices > 10) {
-                    alert('El límite de dispositivos debe ser entre 1 y 10');
+                    alert('❌ El límite de dispositivos debe ser entre 1 y 10');
                     return;
                 }
                 
                 if (!inactivityTimeout || inactivityTimeout < 1 || inactivityTimeout > 60) {
-                    alert('El tiempo de inactividad debe ser entre 1 y 60 minutos');
+                    alert('❌ El tiempo de inactividad debe ser entre 1 y 60 minutos');
                     return;
                 }
                 
                 if (!redirectUrl) {
-                    alert('La URL de redirección es requerida');
+                    alert('❌ La URL de redirección es requerida');
                     return;
                 }
                 
@@ -2208,9 +2055,9 @@
                 });
                 
                 if (success) {
-                    alert('Configuración guardada correctamente');
+                    alert('✅ Configuración guardada correctamente');
                 } else {
-                    alert('Error al guardar la configuración');
+                    alert('❌ Error al guardar la configuración');
                 }
             }
             
@@ -2220,31 +2067,26 @@
                 const passwordConfirm = document.getElementById('admin-password-confirm').value;
                 
                 if (!username) {
-                    alert('El usuario es requerido');
+                    alert('❌ El usuario es requerido');
                     return;
                 }
                 
                 if (password && password !== passwordConfirm) {
-                    alert('Las contraseñas no coinciden');
+                    alert('❌ Las contraseñas no coinciden');
                     return;
                 }
                 
-                const settings = {
-                    adminUser: username
-                };
-                
-                if (password) {
-                    settings.adminPassword = password;
-                }
+                const settings = { adminUser: username };
+                if (password) settings.adminPassword = password;
                 
                 const success = this.securitySystem.updateSettings(settings);
                 
                 if (success) {
-                    alert('Credenciales guardadas correctamente');
+                    alert('✅ Credenciales guardadas correctamente');
                     document.getElementById('admin-password').value = '';
                     document.getElementById('admin-password-confirm').value = '';
                 } else {
-                    alert('Error al guardar las credenciales');
+                    alert('❌ Error al guardar las credenciales');
                 }
             }
             
@@ -2261,7 +2103,7 @@
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
                 
-                alert('Datos exportados correctamente');
+                alert('✅ Datos exportados correctamente');
             }
             
             importData() {
@@ -2280,9 +2122,9 @@
                         if (success) {
                             this.loadSettings();
                             this.loadAdminData();
-                            alert('Datos importados correctamente');
+                            alert('✅ Datos importados correctamente');
                         } else {
-                            alert('Error al importar los datos. Verifique el archivo.');
+                            alert('❌ Error al importar los datos. Verifique el archivo.');
                         }
                     };
                     
@@ -2298,12 +2140,12 @@
                 if (success) {
                     this.loadSettings();
                     this.loadAdminData();
-                    alert('Datos restablecidos correctamente');
+                    alert('✅ Datos restablecidos correctamente');
                 }
             }
         }
 
-        // 🚀 Inicialización del Sistema
+        // ===== INICIALIZACIÓN DEL SISTEMA =====
         document.addEventListener('DOMContentLoaded', () => {
             const securitySystem = new CodeSecuritySystem();
             const adminSystem = new AdminSystem(securitySystem);
@@ -2312,8 +2154,9 @@
             const codeInput = document.getElementById('code');
             const messageEl = document.getElementById('message');
             const deviceInfoEl = document.getElementById('device-info');
+            const submitBtn = document.getElementById('submit-btn');
 
-            // Mostrar código guardado si existe
+            // Cargar código guardado si existe
             const savedCode = localStorage.getItem('currentValidCode');
             if (savedCode) {
                 codeInput.value = savedCode;
@@ -2321,7 +2164,7 @@
                 securitySystem.updateDeviceInfoDisplay(info);
             }
 
-            // 🖊️ Manejar entrada de código
+            // Manejar entrada de código
             codeInput.addEventListener('input', function() {
                 this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
                 
@@ -2330,13 +2173,15 @@
                     securitySystem.updateDeviceInfoDisplay(info);
                 } else {
                     deviceInfoEl.textContent = '';
+                    deviceInfoEl.className = '';
                 }
             });
 
-            // 🎯 Manejar envío del formulario
+            // Manejar envío del formulario
             accessForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const code = codeInput.value.trim();
+                const originalBtnText = submitBtn.innerHTML;
                 
                 // Validación básica
                 if (code.length !== 4 || !/^[A-Z0-9]{4}$/.test(code)) {
@@ -2344,27 +2189,48 @@
                     return;
                 }
 
+                // Mostrar loading
+                submitBtn.innerHTML = '<div class="loading"></div> Verificando...';
+                submitBtn.disabled = true;
                 showMessage("🔒 Verificando código...", "info");
                 
-                const result = await securitySystem.validateAccessCode(code);
-                
-                if (result.valid) {
-                    showMessage("✅ Acceso concedido...", "success");
-                    // ✅ Redirigir al NUEVO ENLACE solo después de validación exitosa
-                    setTimeout(() => {
-                        window.location.href = SECURITY_CONFIG.REDIRECT_URL;
-                    }, 1500);
-                } else {
-                    showMessage(`❌ ${result.error}`, "error");
+                try {
+                    const result = await securitySystem.validateAccessCode(code);
+                    
+                    if (result.valid) {
+                        showMessage(result.message, "success");
+                        
+                        // Redirigir después de éxito
+                        setTimeout(() => {
+                            window.location.href = SECURITY_CONFIG.REDIRECT_URL;
+                        }, 2000);
+                    } else {
+                        showMessage(result.error, "error");
+                    }
+                } catch (error) {
+                    showMessage("❌ Error del sistema. Intente nuevamente.", "error");
+                } finally {
+                    // Restaurar botón
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
                 }
             });
 
-            // 💬 Mostrar mensajes de estado
             function showMessage(text, type) {
                 messageEl.innerHTML = text;
                 messageEl.className = type;
             }
         });
+
+        // ===== PROTECCIÓN BÁSICA CONTRA HERRAMIENTAS DE DESARROLLO =====
+        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('keydown', e => {
+                if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C'))) {
+                    e.preventDefault();
+                }
+            });
+        }
     </script>
 </body>
 </html>
