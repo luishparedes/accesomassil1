@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Acceso Premium | Sistema Exclusivo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -995,52 +995,54 @@
                 this.initSecurityProtections();
             }
             
-           initSecurityProtections() {
-    // Detectar si es un dispositivo móvil
-    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    // Protección contra navegación hacia atrás - SOLO EN ESCRITORIO
-    if (!isMobileDevice) {
-        window.history.pushState(null, null, window.location.href);
-        window.onpopstate = function() {
-            window.history.pushState(null, null, window.location.href);
-        };
-        
-        // Prevenir F12 y atajos de teclado para herramientas de desarrollo
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'F12' || 
-                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
-                (e.ctrlKey && e.key === 'u')) {
-                e.preventDefault();
-                return false;
+            initSecurityProtections() {
+                // Detectar si es un dispositivo móvil
+                const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
+                console.log(`📱 Modo ${isMobileDevice ? 'móvil' : 'escritorio'} detectado - Protecciones F12 ${isMobileDevice ? 'deshabilitadas' : 'activadas'}`);
+                
+                // Protección contra navegación hacia atrás - SOLO EN ESCRITORIO
+                if (!isMobileDevice) {
+                    window.history.pushState(null, null, window.location.href);
+                    window.onpopstate = function() {
+                        window.history.pushState(null, null, window.location.href);
+                    };
+                    
+                    // Prevenir F12 y atajos de teclado para herramientas de desarrollo (solo escritorio)
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'F12' || 
+                            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+                            (e.ctrlKey && e.key === 'u')) {
+                            e.preventDefault();
+                            console.log('🔒 Acceso restringido a herramientas de desarrollo');
+                            return false;
+                        }
+                    });
+                    
+                    // Prevenir clic derecho (solo en escritorio)
+                    document.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        return false;
+                    });
+                }
+                
+                // Detección menos agresiva de herramientas de desarrollo (solo escritorio)
+                if (!isMobileDevice) {
+                    let devtoolsOpen = false;
+                    const checkDevTools = () => {
+                        const threshold = 160;
+                        const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                        const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                        devtoolsOpen = widthThreshold || heightThreshold;
+                        
+                        if (devtoolsOpen) {
+                            console.warn("🔧 Se detectó el uso de herramientas de desarrollo");
+                        }
+                    };
+                    
+                    setInterval(checkDevTools, 2000);
+                }
             }
-        });
-        
-        // Prevenir clic derecho (solo en escritorio)
-        document.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            return false;
-        });
-    }
-    
-    // Detección menos agresiva de herramientas de desarrollo
-    let devtoolsOpen = false;
-    const checkDevTools = () => {
-        // Solo ejecutar esta verificación en escritorio
-        if (!isMobileDevice) {
-            const threshold = 160;
-            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-            devtoolsOpen = widthThreshold || heightThreshold;
-            
-            if (devtoolsOpen) {
-                console.warn("Se detectó el uso de herramientas de desarrollo");
-            }
-        }
-    };
-    
-    setInterval(checkDevTools, 2000);
-}
             
             loadConfigFromStorage() {
                 try {
