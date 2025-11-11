@@ -996,49 +996,55 @@
             }
             
             initSecurityProtections() {
-                // Protección contra navegación hacia atrás
-                window.history.pushState(null, null, window.location.href);
-                window.onpopstate = function() {
-                    window.history.pushState(null, null, window.location.href);
-                };
-                
-                // Protección contra F12 y herramientas de desarrollo (solo en escritorio)
-                if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                    // Prevenir F12
-                    document.addEventListener('keydown', (e) => {
-                        if (e.key === 'F12' || 
-                            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
-                            (e.key === 'F5') ||
-                            (e.ctrlKey && e.key === 'r') ||
-                            (e.ctrlKey && e.key === 'R')) {
-                            e.preventDefault();
-                            return false;
-                        }
-                    });
-                    
-                    // Prevenir clic derecho
-                    document.addEventListener('contextmenu', (e) => {
-                        e.preventDefault();
-                        return false;
-                    });
-                    
-                    // Detectar apertura de herramientas de desarrollo
-                    let devtoolsOpen = false;
-                    const threshold = 160;
-                    const checkDevTools = () => {
-                        const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-                        const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-                        devtoolsOpen = widthThreshold || heightThreshold;
-                        
-                        if (devtoolsOpen) {
-                            document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#f8f9fa;color:#e74c3c;font-size:1.5rem;text-align:center;"><div><i class="fas fa-ban" style="font-size:3rem;margin-bottom:1rem;"></i><br>Acceso no autorizado detectado</div></div>';
-                            throw new Error("Acceso no autorizado");
-                        }
-                    };
-                    
-                    setInterval(checkDevTools, 500);
-                }
+    // Protección contra navegación hacia atrás
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function() {
+        window.history.pushState(null, null, window.location.href);
+    };
+    
+    // Detectar si es un dispositivo móvil
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // Solo aplicar protecciones avanzadas en escritorio
+    if (!isMobileDevice) {
+        // Prevenir F12 y atajos de teclado para herramientas de desarrollo
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
             }
+        });
+        
+        // Prevenir clic derecho (solo en escritorio)
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            return false;
+        });
+    }
+    
+    // Detección menos agresiva de herramientas de desarrollo (compatible con móviles)
+    let devtoolsOpen = false;
+    const checkDevTools = () => {
+        // Solo ejecutar esta verificación en escritorio
+        if (!isMobileDevice) {
+            const threshold = 160;
+            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+            devtoolsOpen = widthThreshold || heightThreshold;
+            
+            if (devtoolsOpen) {
+                // En lugar de bloquear completamente, mostrar advertencia pero permitir funcionalidad
+                console.warn("Se detectó el uso de herramientas de desarrollo");
+                // No bloquear la aplicación completamente en móviles
+            }
+        }
+    };
+    
+    // Verificación menos frecuente para mejor rendimiento en móviles
+    setInterval(checkDevTools, 2000);
+}
             
             loadConfigFromStorage() {
                 try {
