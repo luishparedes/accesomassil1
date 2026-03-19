@@ -1242,26 +1242,25 @@
             }
 
             updateDeviceInfoDisplay(info) {
-                const deviceInfoEl = document.getElementById('device-info');
-                if (!deviceInfoEl || !info || info.registeredDevices === 0) {
-                    if (deviceInfoEl) deviceInfoEl.textContent = '';
-                    return;
-                }
+    const deviceInfoEl = document.getElementById('device-info');
+    if (!deviceInfoEl || !info || info.registeredDevices === 0) {
+        if (deviceInfoEl) deviceInfoEl.textContent = '';
+        return;
+    }
 
-                if (info.isRegistered) {
-                    deviceInfoEl.innerHTML = `✅ Este dispositivo está registrado<br>
-                                            <small>Dispositivos: ${info.registeredDevices}/${info.maxDevices}</small>`;
-                    deviceInfoEl.className = 'success';
-                } else if (info.availableSlots > 0) {
-                    deviceInfoEl.innerHTML = `⚠️ Este código tiene ${info.registeredDevices} de ${info.maxDevices} dispositivos<br>
-                                            <small>Aún puedes registrar ${info.availableSlots} más</small>`;
-                    deviceInfoEl.className = 'warning';
-                } else {
-                    deviceInfoEl.innerHTML = `❌ Límite de dispositivos alcanzado<br>
-                                            <small>Este código ya tiene ${info.maxDevices} dispositivos registrados</small>`;
-                    deviceInfoEl.className = 'error';
-                }
-            }
+    if (info.isRegistered) {
+        deviceInfoEl.innerHTML = `✅ Este dispositivo está registrado`;
+        deviceInfoEl.className = 'success';
+    } else if (info.availableSlots > 0) {
+        deviceInfoEl.innerHTML = `⚠️ Este código tiene ${info.registeredDevices} de ${info.maxDevices} dispositivos<br>
+                                <small>Aún puedes registrar ${info.availableSlots} más</small>`;
+        deviceInfoEl.className = 'warning';
+    } else {
+        deviceInfoEl.innerHTML = `❌ Límite de dispositivos alcanzado<br>
+                                <small>Este código ya tiene ${info.maxDevices} dispositivos registrados</small>`;
+        deviceInfoEl.className = 'error';
+    }
+}
 
             // === MÉTODOS DE ADMINISTRACIÓN ===
             getAllCodes() {
